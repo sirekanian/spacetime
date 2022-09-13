@@ -1,0 +1,15 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="Theme.Spacetime" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowBackground">@color/appWindowBackground</item>
+        <item name="android:statusBarColor">@color/appStatusBarColor</item>
+        <item name="android:navigationBarColor">@color/appNavigationBarColor</item>
+        <item name="android:windowLightStatusBar" tools:ignore="NewApi">
+            @bool/appWindowLightStatusBar
+        </item>
+        <item name="android:windowLightNavigationBar" tools:ignore="NewApi">
+            @bool/appWindowLightNavigationBar
+        </item>
+    </style>
+
+</resources>

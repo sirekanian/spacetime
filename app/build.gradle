@@ -1,0 +1,55 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+}
+
+apply(from: 'version.gradle')
+
+android {
+    compileSdk 33
+    defaultConfig {
+        applicationId "com.sirekanian.spacetime"
+        minSdk 21
+        targetSdk 33
+        versionCode appVersionCode
+        versionName appVersionName
+        archivesBaseName = "$applicationId-$versionName-$versionCode"
+        vectorDrawables {
+            useSupportLibrary true
+        }
+    }
+    buildTypes {
+        debug {
+            applicationIdSuffix '.debug'
+        }
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion composeCompilerVersion
+    }
+    packagingOptions {
+        resources {
+            excludes += '/META-INF/{AL2.0,LGPL2.1}'
+        }
+    }
+}
+
+dependencies {
+    implementation "androidx.core:core-ktx:1.9.0"
+    implementation "androidx.compose.material:material:$composeLibraryVersion"
+    implementation "androidx.activity:activity-compose:1.5.1"
+}
