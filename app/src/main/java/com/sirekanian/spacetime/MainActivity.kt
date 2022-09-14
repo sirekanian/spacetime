@@ -4,34 +4,39 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
+import com.google.accompanist.pager.ExperimentalPagerApi
+import com.google.accompanist.pager.HorizontalPager
 import com.sirekanian.spacetime.ui.theme.SpacetimeTheme
 
 class MainActivity : ComponentActivity() {
+
+    @ExperimentalPagerApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
+            val state = remember { MainState() }
+            val pages = state.getPages()
             SpacetimeTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
+                    color = MaterialTheme.colors.background,
                 ) {
-                    Text(
-                        text = "Hello Android!",
-                        modifier = Modifier
-                            .padding(16.dp)
-                            .systemBarsPadding()
-                    )
+                    HorizontalPager(
+                        count = pages.size,
+                        modifier = Modifier.systemBarsPadding(),
+                    ) { index ->
+                        PageContent(state, pages[index], index)
+                    }
                 }
             }
         }
     }
+
 }
