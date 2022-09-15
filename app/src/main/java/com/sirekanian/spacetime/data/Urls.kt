@@ -1,0 +1,36 @@
+package com.sirekanian.spacetime.data
+
+private const val BASE_URL = "https://apod.nasa.gov/apod/image"
+
+val URLS = listOf(
+    "$BASE_URL/2209/SnakingFilament_Friedman_960.jpg",
+    "$BASE_URL/2209/sprites_scerba_960.jpg",
+    "$BASE_URL/2209/Traful-Lake1024.jpg",
+    "$BASE_URL/2209/voyager_modern_poster_crop.jpg",
+    "$BASE_URL/2209/NGC7000_NB_2022_1024.jpg",
+    "$BASE_URL/2209/TarantulaNearIr_Webb_960.jpg",
+    "$BASE_URL/2209/Pileus_Jiaqi_960.jpg",
+    "$BASE_URL/2209/CarinaCliffs_Webb_1080.jpg",
+    "$BASE_URL/2209/MilkyWayOregon_Montoya_960.jpg",
+    "$BASE_URL/2209/Interval29seconds_Transit1200.jpg",
+    "$BASE_URL/2209/m51_l2_1024.jpg",
+    "$BASE_URL/2209/TulipCygX-1_1024.jpg",
+    "$BASE_URL/2208/SiccarPoint_CuriosityGill_1080.jpg",
+    "$BASE_URL/2208/Jupiter2_WebbSchmidt_1080_annotated.jpg",
+    "$BASE_URL/2208/Horsehead_Chatzifrantzis_1080.jpg",
+    "$BASE_URL/2208/IC5146JenkinsAB3_1100.jpg",
+    "$BASE_URL/2208/Chokshi_DSC7584_Panorama_c1024.jpg",
+    "$BASE_URL/2208/Tiangong_transiting_moon_Lucy_Hu_c1024.jpg",
+    "$BASE_URL/2208/Cartwheel_Webb_960.jpg",
+    "$BASE_URL/2208/MeteorGalaxy_Looten_1000.jpg",
+    "$BASE_URL/2208/Crab_HubbleChandraSpitzer_1080.jpg",
+    "$BASE_URL/2208/C2017K2_220818_1050.jpg",
+    "$BASE_URL/2208/Saturn1993-2022Lb1024.jpg",
+    "$BASE_URL/2208/perseids2022jcc2k800.jpg",
+    "$BASE_URL/2208/StargateMilkyWay_Oudoux_960.jpg",
+    "$BASE_URL/2208/MeteorWind_Larnaout_960.jpg",
+    "$BASE_URL/2208/CygnusWall_Bogaerts_960.jpg",
+    "$BASE_URL/2208/PIA12572_1200.jpg",
+    "$BASE_URL/2208/M16_final_1024.jpg",
+    "$BASE_URL/2208/MagicPerseid001_1024.jpg",
+)

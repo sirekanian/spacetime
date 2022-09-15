@@ -3,8 +3,10 @@ package com.sirekanian.spacetime
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.foundation.layout.systemBars
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.remember
@@ -25,18 +27,16 @@ class MainActivity : ComponentActivity() {
         setContent {
             val state = remember { MainState() }
             val pages = state.getPages()
+            val insets = WindowInsets.systemBars.asPaddingValues()
             SpacetimeTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background,
                 ) {
-                    HorizontalPager(
-                        count = pages.size,
-                        modifier = Modifier.systemBarsPadding(),
-                    ) { index ->
+                    HorizontalPager(pages.size) { index ->
                         when (val page = pages[index]) {
-                            is ImagePage -> ImagePageContent(state, page, index)
-                            GalleryPage -> GalleryPageContent(state)
+                            is ImagePage -> ImagePageContent(insets, state, page, index)
+                            GalleryPage -> GalleryPageContent(insets, state)
                         }
                     }
                 }

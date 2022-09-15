@@ -3,14 +3,12 @@ package com.sirekanian.spacetime
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import com.sirekanian.spacetime.data.URLS
 
 class MainState {
 
     private var list by mutableStateOf(
-        listOf(
-            ImagePage("default1"),
-            ImagePage("default2"),
-        )
+        URLS.take(2).map(::ImagePage)
     )
 
     fun getPages(): List<Page> =
