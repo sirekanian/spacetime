@@ -12,6 +12,8 @@ import androidx.compose.ui.Modifier
 import androidx.core.view.WindowCompat
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
+import com.sirekanian.spacetime.ui.GalleryPageContent
+import com.sirekanian.spacetime.ui.ImagePageContent
 import com.sirekanian.spacetime.ui.theme.SpacetimeTheme
 
 class MainActivity : ComponentActivity() {
@@ -32,7 +34,10 @@ class MainActivity : ComponentActivity() {
                         count = pages.size,
                         modifier = Modifier.systemBarsPadding(),
                     ) { index ->
-                        PageContent(state, pages[index], index)
+                        when (val page = pages[index]) {
+                            is ImagePage -> ImagePageContent(state, page, index)
+                            GalleryPage -> GalleryPageContent(state)
+                        }
                     }
                 }
             }
