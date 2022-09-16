@@ -9,8 +9,10 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.sirekanian.spacetime.MainState
 import com.sirekanian.spacetime.data.URLS
 
@@ -24,7 +26,10 @@ fun GalleryPageContent(insets: PaddingValues, state: MainState) {
         items(URLS.size) { index ->
             val url = URLS[index]
             AsyncImage(
-                model = url,
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(url)
+                    .crossfade(true)
+                    .build(),
                 contentDescription = null,
                 modifier = Modifier
                     .aspectRatio(1f)
