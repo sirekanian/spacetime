@@ -33,7 +33,10 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background,
                 ) {
-                    HorizontalPager(pages.size) { index ->
+                    HorizontalPager(
+                        count = pages.size,
+                        key = { pages[it].uuid },
+                    ) { index ->
                         when (val page = pages[index]) {
                             is ImagePage -> ImagePageContent(insets, state, page, index)
                             GalleryPage -> GalleryPageContent(insets, state)
