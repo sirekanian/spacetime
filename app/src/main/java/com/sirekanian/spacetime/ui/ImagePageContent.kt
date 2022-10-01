@@ -11,13 +11,12 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.sirekanian.spacetime.ImagePage
-import com.sirekanian.spacetime.MainState
 import com.sirekanian.spacetime.ext.DefaultAnimatedVisibility
 import com.sirekanian.spacetime.ext.VectorIconButton
+import com.sirekanian.spacetime.model.ImagePage
 
 @Composable
-fun ImagePageContent(insets: PaddingValues, state: MainState, page: ImagePage, index: Int) {
+fun ImagePageContent(insets: PaddingValues, page: ImagePage, onDelete: () -> Unit) {
     AsyncImage(
         model = ImageRequest.Builder(LocalContext.current)
             .data(page.name)
@@ -38,7 +37,7 @@ fun ImagePageContent(insets: PaddingValues, state: MainState, page: ImagePage, i
         Row(Modifier.padding(insets)) {
             VectorIconButton(Icons.Default.ArrowBack, onClick = { isEditMode = false })
             Spacer(Modifier.weight(1f))
-            VectorIconButton(Icons.Default.Delete, onClick = { state.removePage(index) })
+            VectorIconButton(Icons.Default.Delete, onClick = { onDelete() })
         }
     }
 }

@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'org.jetbrains.kotlin.kapt'
 }
 
 apply(from: 'version.gradle')
@@ -16,6 +17,11 @@ android {
         archivesBaseName = "$applicationId-$versionName-$versionCode"
         vectorDrawables {
             useSupportLibrary true
+        }
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
         }
     }
     buildTypes {
@@ -49,8 +55,17 @@ android {
 }
 
 dependencies {
+
+    // compose
     implementation "androidx.compose.material:material:$composeLibraryVersion"
     implementation "androidx.activity:activity-compose:1.6.0"
     implementation "com.google.accompanist:accompanist-pager:0.25.1"
+
+    // room
+    implementation "androidx.room:room-ktx:2.4.3"
+    kapt "androidx.room:room-compiler:2.4.3"
+
+    // coil
     implementation "io.coil-kt:coil-compose:2.2.1"
+
 }

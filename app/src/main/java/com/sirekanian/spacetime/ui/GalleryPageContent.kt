@@ -13,11 +13,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.sirekanian.spacetime.MainState
 import com.sirekanian.spacetime.data.URLS
 
 @Composable
-fun GalleryPageContent(insets: PaddingValues, state: MainState) {
+fun GalleryPageContent(insets: PaddingValues, onSelect: (String) -> Unit) {
     LazyVerticalGrid(
         columns = GridCells.Adaptive(100.dp),
         modifier = Modifier.fillMaxSize(),
@@ -33,7 +32,7 @@ fun GalleryPageContent(insets: PaddingValues, state: MainState) {
                 contentDescription = null,
                 modifier = Modifier
                     .aspectRatio(1f)
-                    .clickable { state.addPage(url) },
+                    .clickable { onSelect(url) },
                 contentScale = ContentScale.Crop,
             )
         }
