@@ -8,14 +8,17 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
+import com.sirekanian.spacetime.model.Draft
 import com.sirekanian.spacetime.model.GalleryPage
 import com.sirekanian.spacetime.model.ImagePage
+import com.sirekanian.spacetime.ui.DraftAlertDialog
 import com.sirekanian.spacetime.ui.GalleryPageContent
 import com.sirekanian.spacetime.ui.ImagePageContent
 
 @Composable
 @ExperimentalPagerApi
 fun MainScreen(presenter: MainPresenter) {
+    val state = presenter.state
     val pages by presenter.observePages().collectAsState(listOf())
     val insets = WindowInsets.systemBars.asPaddingValues()
     HorizontalPager(
@@ -27,8 +30,9 @@ fun MainScreen(presenter: MainPresenter) {
                 ImagePageContent(insets, page, onDelete = { presenter.removePage(page) })
             }
             GalleryPage -> {
-                GalleryPageContent(insets, onSelect = { presenter.addPage(ImagePage(0, "", it)) })
+                GalleryPageContent(insets, onSelect = { state.draft = Draft(it) })
             }
         }
     }
+    DraftAlertDialog(state, onConfirm = { presenter.addPage(it) })
 }
