@@ -9,6 +9,7 @@ class PageEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
     val name: String,
+    val url: String,
 ) {
-    fun toModel() = ImagePage(id, name)
+    fun toModel() = ImagePage(id, name, url)
 }

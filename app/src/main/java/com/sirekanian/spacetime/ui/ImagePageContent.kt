@@ -1,11 +1,13 @@
 package com.sirekanian.spacetime.ui
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -19,7 +21,7 @@ import com.sirekanian.spacetime.model.ImagePage
 fun ImagePageContent(insets: PaddingValues, page: ImagePage, onDelete: () -> Unit) {
     AsyncImage(
         model = ImageRequest.Builder(LocalContext.current)
-            .data(page.name)
+            .data(page.url)
             .crossfade(true)
             .build(),
         contentDescription = null,
@@ -39,5 +41,11 @@ fun ImagePageContent(insets: PaddingValues, page: ImagePage, onDelete: () -> Uni
             Spacer(Modifier.weight(1f))
             VectorIconButton(Icons.Default.Delete, onClick = { onDelete() })
         }
+    }
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center,
+    ) {
+        Text(page.name)
     }
 }
