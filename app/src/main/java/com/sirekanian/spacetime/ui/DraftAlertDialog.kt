@@ -19,6 +19,8 @@ fun DraftAlertDialog(state: MainState, onConfirm: (ImagePage) -> Unit) {
     val draft = state.draft
     var name by remember(draft) { mutableStateOf("") }
     var date by remember(draft) { mutableStateOf("") }
+    var isNameValid by remember(draft, name) { mutableStateOf(true) }
+    var isDateValid by remember(draft, date) { mutableStateOf(true) }
     if (draft != null) {
         MyAlertDialog(
             title = {
@@ -34,12 +36,14 @@ fun DraftAlertDialog(state: MainState, onConfirm: (ImagePage) -> Unit) {
                     onValueChange = { name = it },
                     modifier = Modifier.focusRequester(focusRequester),
                     label = { Text("Name") },
+                    isError = !isNameValid
                 )
                 OutlinedTextField(
                     value = date,
                     onValueChange = { date = it },
                     label = { Text("Date") },
                     placeholder = { Text("YYYY-MM-DD") },
+                    isError = !isDateValid,
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
                 )
                 LaunchedEffect(Unit) {
@@ -55,8 +59,12 @@ fun DraftAlertDialog(state: MainState, onConfirm: (ImagePage) -> Unit) {
             confirmButton = {
                 TextButton(
                     onClick = {
-                        onConfirm(ImagePage(0, name, draft.url, date))
-                        state.draft = null
+                        isNameValid = name.isNotEmpty()
+                        isDateValid = date.length == 8
+                        if (isNameValid && isDateValid) {
+                            onConfirm(ImagePage(0, name, draft.url, date))
+                            state.draft = null
+                        }
                     },
                     content = { Text("OK") },
                 )
