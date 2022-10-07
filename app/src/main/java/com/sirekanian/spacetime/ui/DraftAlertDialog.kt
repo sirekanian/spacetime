@@ -18,7 +18,7 @@ import com.sirekanian.spacetime.model.ImagePage
 fun DraftAlertDialog(state: MainState, onConfirm: (ImagePage) -> Unit) {
     val draft = state.draft
     var name by remember(draft) { mutableStateOf("") }
-    var date by remember(draft) { mutableStateOf("") }
+    var date by remember(draft) { mutableStateOf(DateField("")) }
     var isNameValid by remember(draft, name) { mutableStateOf(true) }
     var isDateValid by remember(draft, date) { mutableStateOf(true) }
     if (draft != null) {
@@ -39,11 +39,12 @@ fun DraftAlertDialog(state: MainState, onConfirm: (ImagePage) -> Unit) {
                     isError = !isNameValid
                 )
                 OutlinedTextField(
-                    value = date,
-                    onValueChange = { date = it },
+                    value = date.value,
+                    onValueChange = { date = DateField(it) },
                     label = { Text("Date") },
                     placeholder = { Text("YYYY-MM-DD") },
                     isError = !isDateValid,
+                    visualTransformation = { DateField(it.text).getVisualTransformation() },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
                 )
                 LaunchedEffect(Unit) {
@@ -60,9 +61,9 @@ fun DraftAlertDialog(state: MainState, onConfirm: (ImagePage) -> Unit) {
                 TextButton(
                     onClick = {
                         isNameValid = name.isNotEmpty()
-                        isDateValid = date.length == 8
+                        isDateValid = date.isValid()
                         if (isNameValid && isDateValid) {
-                            onConfirm(ImagePage(0, name, draft.url, date))
+                            onConfirm(ImagePage(0, name, draft.url, date.getFormattedValue()))
                             state.draft = null
                         }
                     },
