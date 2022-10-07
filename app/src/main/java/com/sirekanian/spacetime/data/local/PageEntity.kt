@@ -10,6 +10,7 @@ class PageEntity(
     val id: Int,
     val name: String,
     val url: String,
+    val date: String,
 ) {
-    fun toModel() = ImagePage(id, name, url)
+    fun toModel() = ImagePage(id, name, url, date)
 }

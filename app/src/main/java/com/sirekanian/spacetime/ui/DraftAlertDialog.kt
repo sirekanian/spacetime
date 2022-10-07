@@ -1,12 +1,14 @@
 package com.sirekanian.spacetime.ui
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.sirekanian.spacetime.MainState
@@ -16,6 +18,7 @@ import com.sirekanian.spacetime.model.ImagePage
 fun DraftAlertDialog(state: MainState, onConfirm: (ImagePage) -> Unit) {
     val draft = state.draft
     var name by remember(draft) { mutableStateOf("") }
+    var date by remember(draft) { mutableStateOf("") }
     if (draft != null) {
         MyAlertDialog(
             title = {
@@ -32,6 +35,13 @@ fun DraftAlertDialog(state: MainState, onConfirm: (ImagePage) -> Unit) {
                     modifier = Modifier.focusRequester(focusRequester),
                     label = { Text("Name") },
                 )
+                OutlinedTextField(
+                    value = date,
+                    onValueChange = { date = it },
+                    label = { Text("Date") },
+                    placeholder = { Text("YYYY-MM-DD") },
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+                )
                 LaunchedEffect(Unit) {
                     focusRequester.requestFocus()
                 }
@@ -45,7 +55,7 @@ fun DraftAlertDialog(state: MainState, onConfirm: (ImagePage) -> Unit) {
             confirmButton = {
                 TextButton(
                     onClick = {
-                        onConfirm(ImagePage(0, name, draft.url))
+                        onConfirm(ImagePage(0, name, draft.url, date))
                         state.draft = null
                     },
                     content = { Text("OK") },

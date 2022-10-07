@@ -42,10 +42,12 @@ fun ImagePageContent(insets: PaddingValues, page: ImagePage, onDelete: () -> Uni
             VectorIconButton(Icons.Default.Delete, onClick = { onDelete() })
         }
     }
-    Box(
+    Column(
         modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
     ) {
         Text(page.name)
+        Text(page.date)
     }
 }
