@@ -1,6 +1,6 @@
 package com.sirekanian.spacetime.data
 
-private const val BASE_URL = "https://apod.nasa.gov/apod/image"
+private const val BASE_URL = "https://sirekanian.com/apod/apod.nasa.gov/apod/image"
 
 val URLS = listOf(
     "$BASE_URL/2209/SnakingFilament_Friedman_960.jpg",
