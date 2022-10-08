@@ -8,6 +8,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
@@ -36,7 +37,9 @@ fun DraftAlertDialog(state: MainState, onConfirm: (ImagePage) -> Unit) {
                     onValueChange = { name = it },
                     modifier = Modifier.focusRequester(focusRequester),
                     label = { Text("Name") },
-                    isError = !isNameValid
+                    isError = !isNameValid,
+                    keyboardOptions = KeyboardOptions(KeyboardCapitalization.Sentences),
+                    singleLine = true,
                 )
                 OutlinedTextField(
                     value = date.value,
@@ -45,7 +48,8 @@ fun DraftAlertDialog(state: MainState, onConfirm: (ImagePage) -> Unit) {
                     placeholder = { Text("YYYY-MM-DD") },
                     isError = !isDateValid,
                     visualTransformation = { DateField(it.text).getVisualTransformation() },
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                    singleLine = true,
                 )
                 LaunchedEffect(Unit) {
                     focusRequester.requestFocus()
@@ -60,7 +64,7 @@ fun DraftAlertDialog(state: MainState, onConfirm: (ImagePage) -> Unit) {
             confirmButton = {
                 TextButton(
                     onClick = {
-                        isNameValid = name.isNotEmpty()
+                        isNameValid = name.isNotBlank()
                         isDateValid = date.isValid()
                         if (isNameValid && isDateValid) {
                             onConfirm(ImagePage(0, name, draft.url, date))
