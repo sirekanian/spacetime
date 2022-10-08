@@ -1,6 +1,7 @@
 package com.sirekanian.spacetime.ui
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -47,16 +48,20 @@ fun ImagePageContent(insets: PaddingValues, page: ImagePage, onDelete: () -> Uni
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
-        Text(page.name)
+        Text(
+            text = page.name,
+            style = MaterialTheme.typography.h2,
+        )
         page.date.getRelativeDays()?.let { days ->
             Text(
-                when {
+                text = when {
                     days == 0 -> "today"
                     days == 1 -> "tomorrow"
                     days == -1 -> "yesterday"
                     days > 0 -> "in $days days"
                     else -> "${-days} days ago"
-                }
+                },
+                style = MaterialTheme.typography.h3,
             )
         }
     }
