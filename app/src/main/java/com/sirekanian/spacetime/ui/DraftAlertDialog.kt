@@ -63,7 +63,7 @@ fun DraftAlertDialog(state: MainState, onConfirm: (ImagePage) -> Unit) {
                         isNameValid = name.isNotEmpty()
                         isDateValid = date.isValid()
                         if (isNameValid && isDateValid) {
-                            onConfirm(ImagePage(0, name, draft.url, date.getFormattedValue()))
+                            onConfirm(ImagePage(0, name, draft.url, date))
                             state.draft = null
                         }
                     },

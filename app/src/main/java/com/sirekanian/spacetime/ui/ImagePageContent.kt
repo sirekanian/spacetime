@@ -48,6 +48,16 @@ fun ImagePageContent(insets: PaddingValues, page: ImagePage, onDelete: () -> Uni
         verticalArrangement = Arrangement.Center,
     ) {
         Text(page.name)
-        Text(page.date)
+        page.date.getRelativeDays()?.let { days ->
+            Text(
+                when {
+                    days == 0 -> "today"
+                    days == 1 -> "tomorrow"
+                    days == -1 -> "yesterday"
+                    days > 0 -> "in $days days"
+                    else -> "${-days} days ago"
+                }
+            )
+        }
     }
 }

@@ -1,8 +1,11 @@
 package com.sirekanian.spacetime.ui
 
+import android.util.Log
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.input.OffsetMapping
 import androidx.compose.ui.text.input.TransformedText
+import com.sirekanian.spacetime.ext.currentDate
+import kotlinx.datetime.LocalDate
 
 private val offsetMapping = object : OffsetMapping {
     override fun originalToTransformed(offset: Int): Int =
@@ -28,12 +31,26 @@ class DateField(value: String) {
     private val day: String get() = value.drop(6).take(2)
 
     fun isValid(): Boolean =
-        value.length == 8 && month.toInt() in (1..12) && day.toInt() in (1..31)
+        getLocalDate() != null
+
+    fun getRelativeDays(): Int? =
+        getLocalDate()?.toEpochDays()?.minus(currentDate().toEpochDays())
+
+    private fun getLocalDate(): LocalDate? {
+        if (value.length == 8) {
+            try {
+                return LocalDate(year.toInt(), month.toInt(), day.toInt())
+            } catch (exception: IllegalArgumentException) {
+                Log.d("SPACETIME", "Cannot parse date", exception)
+            }
+        }
+        return null
+    }
 
     fun getVisualTransformation(): TransformedText =
         TransformedText(AnnotatedString(getFormattedValue()), offsetMapping)
 
-    fun getFormattedValue(): String =
+    private fun getFormattedValue(): String =
         when (value.length) {
             in (0..3) -> year
             in (4..5) -> "$year-$month"
