@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.sirekanian.spacetime.MainState
 import com.sirekanian.spacetime.model.ImagePage
+import com.sirekanian.spacetime.model.createImagePage
 
 @Composable
 fun DraftAlertDialog(state: MainState, onConfirm: (ImagePage) -> Unit) {
@@ -67,7 +68,7 @@ fun DraftAlertDialog(state: MainState, onConfirm: (ImagePage) -> Unit) {
                         isNameValid = name.isNotBlank()
                         isDateValid = date.isValid()
                         if (isNameValid && isDateValid) {
-                            onConfirm(ImagePage(0, name, draft.url, date))
+                            onConfirm(createImagePage(name, draft.url, date))
                             state.draft = null
                         }
                     },

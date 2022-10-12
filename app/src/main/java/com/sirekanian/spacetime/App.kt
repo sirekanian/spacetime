@@ -12,7 +12,7 @@ class App : Application() {
     val repository: Repository by lazy {
         RepositoryImpl(
             Room.databaseBuilder(this, Database::class.java, "database")
-                .addCallback(DefaultDataCallback())
+                .addCallback(DefaultDataCallback(resources))
                 .build().getPageDao()
         )
     }

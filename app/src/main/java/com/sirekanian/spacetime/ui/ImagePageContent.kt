@@ -59,7 +59,7 @@ fun ImagePageContent(insets: PaddingValues, page: ImagePage, onDelete: () -> Uni
                     days == 1 -> "tomorrow"
                     days == -1 -> "yesterday"
                     days > 0 -> "in $days days"
-                    else -> "${-days} days ago"
+                    else -> "${-days} days"
                 },
                 style = MaterialTheme.typography.h3,
             )

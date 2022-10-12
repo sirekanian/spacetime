@@ -1,3 +1,11 @@
-<resources>
-    <string name="app_name">Spacetime</string>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name" translatable="false">Spacetime</string>
+    <string-array name="default_page_names">
+        <item>The war goes on</item>
+        <item>Navalny in prison</item>
+    </string-array>
+    <string-array name="default_page_dates" tools:ignore="TypographyDashes">
+        <item>2022-02-24</item>
+        <item>2021-01-17</item>
+    </string-array>
 </resources>
