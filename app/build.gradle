@@ -5,6 +5,7 @@ plugins {
 }
 
 android {
+    namespace "com.sirekanian.spacetime"
     compileSdk 33
     defaultConfig {
         applicationId "com.sirekanian.spacetime"
