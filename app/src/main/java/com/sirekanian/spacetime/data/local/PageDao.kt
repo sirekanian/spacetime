@@ -1,9 +1,6 @@
 package com.sirekanian.spacetime.data.local
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -12,7 +9,7 @@ interface PageDao {
     @Query("SELECT * FROM PageEntity")
     fun observe(): Flow<List<PageEntity>>
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(page: PageEntity)
 
     @Delete

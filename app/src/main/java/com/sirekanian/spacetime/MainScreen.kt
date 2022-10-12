@@ -27,12 +27,17 @@ fun MainScreen(presenter: MainPresenter) {
     ) { index ->
         when (val page = pages[index]) {
             is ImagePage -> {
-                ImagePageContent(insets, page, onDelete = { presenter.removePage(page) })
+                ImagePageContent(
+                    insets,
+                    page,
+                    onDelete = { presenter.removePage(page) },
+                    onDone = { presenter.savePage(it) }
+                )
             }
             GalleryPage -> {
                 GalleryPageContent(insets, onSelect = { state.draft = Draft(it) })
             }
         }
     }
-    DraftAlertDialog(state, onConfirm = { presenter.addPage(it) })
+    DraftAlertDialog(state, onConfirm = { presenter.savePage(it) })
 }

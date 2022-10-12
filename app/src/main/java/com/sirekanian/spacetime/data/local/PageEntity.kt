@@ -12,6 +12,7 @@ class PageEntity(
     val name: String,
     val url: String,
     val date: String,
+    val blur: Float,
 ) {
-    fun toModel() = ImagePage(id, name, url, DateField(date))
+    fun toModel() = ImagePage(id, name, url, DateField(date), blur)
 }

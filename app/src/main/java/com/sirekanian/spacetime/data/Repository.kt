@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.map
 interface Repository {
 
     fun observePages(): Flow<List<ImagePage>>
-    suspend fun addPage(page: ImagePage)
+    suspend fun savePage(page: ImagePage)
     suspend fun removePage(page: ImagePage)
 
 }
@@ -19,7 +19,7 @@ class RepositoryImpl(private val dao: PageDao) : Repository {
     override fun observePages(): Flow<List<ImagePage>> =
         dao.observe().map { it.map(PageEntity::toModel) }
 
-    override suspend fun addPage(page: ImagePage) {
+    override suspend fun savePage(page: ImagePage) {
         dao.insert(page.toEntity())
     }
 

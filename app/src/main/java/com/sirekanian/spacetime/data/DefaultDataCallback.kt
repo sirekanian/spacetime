@@ -22,8 +22,8 @@ class DefaultDataCallback(resources: Resources) : RoomDatabase.Callback() {
 
     override fun onCreate(db: SupportSQLiteDatabase) {
         defaultPages.forEach { page ->
-            val args = arrayOf(page.name, page.url, page.date.value)
-            db.execSQL("INSERT INTO PageEntity (name, url, date) VALUES (?, ?, ?)", args)
+            val args = arrayOf(page.name, page.url, page.date.value, page.blur)
+            db.execSQL("INSERT INTO PageEntity (name, url, date, blur) VALUES (?, ?, ?, ?)", args)
         }
     }
 

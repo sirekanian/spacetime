@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "786fcc9fe1efc70145a58cebcc9c668b",
+    "identityHash": "945d4e0bf161f836d129c299b7132d6f",
     "entities": [
       {
         "tableName": "PageEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `url` TEXT NOT NULL, `date` TEXT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `url` TEXT NOT NULL, `date` TEXT NOT NULL, `blur` REAL NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -31,6 +31,12 @@
             "columnName": "date",
             "affinity": "TEXT",
             "notNull": true
+          },
+          {
+            "fieldPath": "blur",
+            "columnName": "blur",
+            "affinity": "REAL",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -46,7 +52,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '786fcc9fe1efc70145a58cebcc9c668b')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '945d4e0bf161f836d129c299b7132d6f')"
     ]
   }
 }

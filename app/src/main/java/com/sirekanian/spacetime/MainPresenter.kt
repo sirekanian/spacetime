@@ -25,7 +25,7 @@ interface MainPresenter {
 
     val state: MainState
     fun observePages(): Flow<List<Page>>
-    fun addPage(page: ImagePage)
+    fun savePage(page: ImagePage)
     fun removePage(page: ImagePage)
 
 }
@@ -40,9 +40,9 @@ class MainPresenterImpl(
     override fun observePages(): Flow<List<Page>> =
         repository.observePages().map { it.plus(GalleryPage) }
 
-    override fun addPage(page: ImagePage) {
+    override fun savePage(page: ImagePage) {
         scope.launch {
-            repository.addPage(page)
+            repository.savePage(page)
         }
     }
 
