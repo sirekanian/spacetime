@@ -8,4 +8,8 @@
         <item>2022-02-24</item>
         <item>2021-01-17</item>
     </string-array>
+    <plurals name="duration_days">
+        <item quantity="one">%d day</item>
+        <item quantity="other">%d days</item>
+    </plurals>
 </resources>

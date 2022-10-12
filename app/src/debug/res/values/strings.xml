@@ -1,3 +1,3 @@
 <resources>
-    <string name="app_name">Spacetime!</string>
+    <string name="app_name" translatable="false">Spacetime!</string>
 </resources>

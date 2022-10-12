@@ -11,13 +11,16 @@ import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.sirekanian.spacetime.R
 import com.sirekanian.spacetime.ext.DefaultAnimatedVisibility
 import com.sirekanian.spacetime.ext.VectorIconButton
 import com.sirekanian.spacetime.model.ImagePage
@@ -83,9 +86,12 @@ fun ImagePageContent(
                     days == 1 -> "tomorrow"
                     days == -1 -> "yesterday"
                     days > 0 -> "in $days days"
-                    else -> "${-days} days"
+                    else -> {
+                        @OptIn(ExperimentalComposeUiApi::class)
+                        pluralStringResource(R.plurals.duration_days, -days, -days)
+                    }
                 },
-                style = MaterialTheme.typography.h3,
+                style = MaterialTheme.typography.h2,
             )
         }
     }

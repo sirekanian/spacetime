@@ -3,4 +3,9 @@
         <item>Война идёт</item>
         <item>Навальный сидит</item>
     </array>
+    <plurals name="duration_days">
+        <item quantity="one">%d день</item>
+        <item quantity="few">%d дня</item>
+        <item quantity="many">%d дней</item>
+    </plurals>
 </resources>
