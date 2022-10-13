@@ -35,7 +35,12 @@ fun MainScreen(presenter: MainPresenter) {
                 )
             }
             GalleryPage -> {
-                GalleryPageContent(insets, onSelect = { state.draft = Draft(it) })
+                GalleryPageContent(
+                    insets,
+                    state.thumbnails,
+                    onSelect = { state.draft = Draft(it) },
+                    onEnd = { presenter.loadGallery() }
+                )
             }
         }
     }

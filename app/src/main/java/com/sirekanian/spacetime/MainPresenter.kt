@@ -5,10 +5,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.platform.LocalContext
 import com.sirekanian.spacetime.data.Repository
+import com.sirekanian.spacetime.data.URLS
 import com.sirekanian.spacetime.ext.app
 import com.sirekanian.spacetime.model.GalleryPage
 import com.sirekanian.spacetime.model.ImagePage
 import com.sirekanian.spacetime.model.Page
+import com.sirekanian.spacetime.model.Thumbnail
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -27,6 +29,7 @@ interface MainPresenter {
     fun observePages(): Flow<List<Page>>
     fun savePage(page: ImagePage)
     fun removePage(page: ImagePage)
+    fun loadGallery()
 
 }
 
@@ -50,6 +53,10 @@ class MainPresenterImpl(
         scope.launch {
             repository.removePage(page)
         }
+    }
+
+    override fun loadGallery() {
+        state.thumbnails = URLS.map(::Thumbnail)
     }
 
 }

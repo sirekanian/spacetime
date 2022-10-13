@@ -8,6 +8,11 @@ import com.sirekanian.spacetime.model.ImagePage
 import com.sirekanian.spacetime.model.createImagePage
 import com.sirekanian.spacetime.ui.DateField
 
+private val defaultImageUrls = listOf(
+    "https://sirekanian.com/apod/image/2209/SnakingFilament_Friedman_960.jpg",
+    "https://sirekanian.com/apod/image/2208/CygnusWall_Bogaerts_960.jpg",
+)
+
 class DefaultDataCallback(resources: Resources) : RoomDatabase.Callback() {
 
     private val defaultPages: List<ImagePage>
@@ -15,7 +20,7 @@ class DefaultDataCallback(resources: Resources) : RoomDatabase.Callback() {
     init {
         val names = resources.getStringArray(R.array.default_page_names)
         val dates = resources.getStringArray(R.array.default_page_dates)
-        defaultPages = names.zip(URLS).zip(dates) { (name, url), date ->
+        defaultPages = names.zip(defaultImageUrls).zip(dates) { (name, url), date ->
             createImagePage(name, url, DateField(date))
         }
     }
