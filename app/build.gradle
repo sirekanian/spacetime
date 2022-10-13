@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'org.jetbrains.kotlin.kapt'
+    id 'org.jetbrains.kotlin.plugin.serialization'
 }
 
 android {
@@ -75,5 +76,10 @@ dependencies {
 
     // datetime
     implementation 'org.jetbrains.kotlinx:kotlinx-datetime:0.4.0'
+
+    // ktor
+    implementation 'io.ktor:ktor-client-android:2.1.2'
+    implementation 'io.ktor:ktor-client-content-negotiation:2.1.2'
+    implementation 'io.ktor:ktor-serialization-kotlinx-json:2.1.2'
 
 }

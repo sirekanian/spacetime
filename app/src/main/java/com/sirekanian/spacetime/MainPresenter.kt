@@ -5,12 +5,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.platform.LocalContext
 import com.sirekanian.spacetime.data.Repository
-import com.sirekanian.spacetime.data.URLS
+import com.sirekanian.spacetime.data.api.ThumbnailApi
 import com.sirekanian.spacetime.ext.app
 import com.sirekanian.spacetime.model.GalleryPage
 import com.sirekanian.spacetime.model.ImagePage
 import com.sirekanian.spacetime.model.Page
-import com.sirekanian.spacetime.model.Thumbnail
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -18,9 +17,9 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun rememberMainPresenter(): MainPresenter {
-    val context = LocalContext.current
+    val app = LocalContext.current.app()
     val scope = rememberCoroutineScope()
-    return remember { MainPresenterImpl(context.app().repository, scope) }
+    return remember { MainPresenterImpl(app.api, app.repository, scope) }
 }
 
 interface MainPresenter {
@@ -34,6 +33,7 @@ interface MainPresenter {
 }
 
 class MainPresenterImpl(
+    private val api: ThumbnailApi,
     private val repository: Repository,
     private val scope: CoroutineScope,
 ) : MainPresenter {
@@ -56,7 +56,9 @@ class MainPresenterImpl(
     }
 
     override fun loadGallery() {
-        state.thumbnails = URLS.map(::Thumbnail)
+        scope.launch {
+            state.thumbnails = api.getThumbnails()
+        }
     }
 
 }
