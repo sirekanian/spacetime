@@ -12,4 +12,11 @@
         <item quantity="one">%d day</item>
         <item quantity="other">%d days</item>
     </plurals>
+    <string name="duration_yesterday">yesterday</string>
+    <string name="duration_today">today</string>
+    <string name="duration_tomorrow">tomorrow</string>
+    <plurals name="duration_in_days">
+        <item quantity="one">in %d day</item>
+        <item quantity="other">in %d days</item>
+    </plurals>
 </resources>

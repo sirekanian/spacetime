@@ -4,8 +4,16 @@
         <item>Навальный сидит</item>
     </array>
     <plurals name="duration_days">
-        <item quantity="one">%d день</item>
-        <item quantity="few">%d дня</item>
-        <item quantity="many">%d дней</item>
+        <item quantity="one">%d день</item>
+        <item quantity="few">%d дня</item>
+        <item quantity="many">%d дней</item>
+    </plurals>
+    <string name="duration_yesterday">вчера</string>
+    <string name="duration_today">сегодня</string>
+    <string name="duration_tomorrow">завтра</string>
+    <plurals name="duration_in_days">
+        <item quantity="one">через %d день</item>
+        <item quantity="few">через %d дня</item>
+        <item quantity="many">через %d дней</item>
     </plurals>
 </resources>

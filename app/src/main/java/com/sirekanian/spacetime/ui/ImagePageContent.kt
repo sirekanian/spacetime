@@ -13,6 +13,7 @@ import androidx.compose.ui.draw.blur
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.pluralStringResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -102,15 +103,12 @@ fun ImagePageContent(
         }
         page.date.getRelativeDays()?.let { days ->
             Text(
-                text = when {
-                    days == 0 -> "today"
-                    days == 1 -> "tomorrow"
-                    days == -1 -> "yesterday"
-                    days > 0 -> "in $days days"
-                    else -> {
-                        @OptIn(ExperimentalComposeUiApi::class)
-                        pluralStringResource(R.plurals.duration_days, -days, -days)
-                    }
+                text = @OptIn(ExperimentalComposeUiApi::class) when {
+                    days == 0 -> stringResource(R.string.duration_today)
+                    days == 1 -> stringResource(R.string.duration_tomorrow)
+                    days == -1 -> stringResource(R.string.duration_yesterday)
+                    days > 0 -> pluralStringResource(R.plurals.duration_in_days, days, days)
+                    else -> pluralStringResource(R.plurals.duration_days, -days, -days)
                 },
                 modifier = Modifier
                     .fillMaxWidth()
