@@ -42,7 +42,7 @@ fun ImagePageContent(
         contentDescription = null,
         modifier = Modifier
             .fillMaxSize()
-            .blur((blur * 32).dp),
+            .blur((blur * 29 + 3).dp),
         contentScale = ContentScale.Crop,
     )
     DefaultAnimatedVisibility(visible = !isEditMode) {
