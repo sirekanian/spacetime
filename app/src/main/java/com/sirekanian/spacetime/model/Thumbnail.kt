@@ -1,3 +1,5 @@
 package com.sirekanian.spacetime.model
 
-class Thumbnail(val url: String)
+import kotlinx.datetime.LocalDate
+
+class Thumbnail(val url: String, val date: LocalDate)

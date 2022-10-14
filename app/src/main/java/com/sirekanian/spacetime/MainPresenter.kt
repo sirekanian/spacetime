@@ -57,7 +57,7 @@ class MainPresenterImpl(
 
     override fun loadGallery() {
         scope.launch {
-            state.thumbnails = api.getThumbnails()
+            state.thumbnails = state.thumbnails + api.getThumbnails(state.nextDate)
         }
     }
 
