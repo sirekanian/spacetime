@@ -37,6 +37,7 @@ fun ImagePageContent(
     var name by remember(isEditMode) { mutableStateOf(page.name) }
     var date by remember(isEditMode) { mutableStateOf(page.date) }
     var blur by remember(isEditMode) { mutableStateOf(page.blur) }
+    var isDateValid by remember(date) { mutableStateOf(true) }
     AsyncImage(
         model = ImageRequest.Builder(LocalContext.current)
             .data(page.url)
@@ -70,8 +71,12 @@ fun ImagePageContent(
                     }
                 }
                 VectorIconButton(Icons.Default.Done, onClick = {
-                    onDone(ImagePage(page.id, name, page.url, date, blur))
-                    isEditMode = false
+                    if (date.isValid()) {
+                        onDone(ImagePage(page.id, name, page.url, date, blur))
+                        isEditMode = false
+                    } else {
+                        isDateValid = false
+                    }
                 })
             }
             Slider(value = blur, onValueChange = { blur = it }, modifier = Modifier.padding(16.dp))
@@ -98,6 +103,7 @@ fun ImagePageContent(
                 onValueChange = { date = DateField(it) },
                 modifier = Modifier.fillMaxWidth(),
                 textStyle = textStyle,
+                isError = !isDateValid,
                 visualTransformation = { DateField(it.text).getVisualTransformation() },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 singleLine = true,
