@@ -1,6 +1,7 @@
 package com.sirekanian.spacetime.ui
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -14,6 +15,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -33,6 +35,7 @@ fun ImagePageContent(
 ) {
     var isEditMode by remember { mutableStateOf(false) }
     var name by remember(isEditMode) { mutableStateOf(page.name) }
+    var date by remember(isEditMode) { mutableStateOf(page.date) }
     var blur by remember(isEditMode) { mutableStateOf(page.blur) }
     AsyncImage(
         model = ImageRequest.Builder(LocalContext.current)
@@ -67,7 +70,7 @@ fun ImagePageContent(
                     }
                 }
                 VectorIconButton(Icons.Default.Done, onClick = {
-                    onDone(ImagePage(page.id, name, page.url, page.date, blur))
+                    onDone(ImagePage(page.id, name, page.url, date, blur))
                     isEditMode = false
                 })
             }
@@ -90,6 +93,15 @@ fun ImagePageContent(
                 textStyle = textStyle,
                 maxLines = 2,
             )
+            OutlinedTextField(
+                value = date.value,
+                onValueChange = { date = DateField(it) },
+                modifier = Modifier.fillMaxWidth(),
+                textStyle = textStyle,
+                visualTransformation = { DateField(it.text).getVisualTransformation() },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                singleLine = true,
+            )
         } else {
             Text(
                 text = page.name,
@@ -100,21 +112,21 @@ fun ImagePageContent(
                 overflow = TextOverflow.Ellipsis,
                 maxLines = 2,
             )
-        }
-        page.date.getRelativeDays()?.let { days ->
-            Text(
-                text = @OptIn(ExperimentalComposeUiApi::class) when {
-                    days == 0 -> stringResource(R.string.duration_today)
-                    days == 1 -> stringResource(R.string.duration_tomorrow)
-                    days == -1 -> stringResource(R.string.duration_yesterday)
-                    days > 0 -> pluralStringResource(R.plurals.duration_in_days, days, days)
-                    else -> pluralStringResource(R.plurals.duration_days, -days, -days)
-                },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-                style = textStyle,
-            )
+            page.date.getRelativeDays()?.let { days ->
+                Text(
+                    text = @OptIn(ExperimentalComposeUiApi::class) when {
+                        days == 0 -> stringResource(R.string.duration_today)
+                        days == 1 -> stringResource(R.string.duration_tomorrow)
+                        days == -1 -> stringResource(R.string.duration_yesterday)
+                        days > 0 -> pluralStringResource(R.plurals.duration_in_days, days, days)
+                        else -> pluralStringResource(R.plurals.duration_days, -days, -days)
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    style = textStyle,
+                )
+            }
         }
     }
 }
