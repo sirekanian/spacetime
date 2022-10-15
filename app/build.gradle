@@ -72,7 +72,7 @@ dependencies {
     kapt "androidx.room:room-compiler:2.4.3"
 
     // coil
-    implementation "io.coil-kt:coil-compose:2.2.1"
+    implementation "io.coil-kt:coil-compose:2.2.2"
 
     // datetime
     implementation 'org.jetbrains.kotlinx:kotlinx-datetime:0.4.0'
