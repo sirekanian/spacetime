@@ -96,6 +96,7 @@ fun ImagePageContent(
                 onValueChange = { name = it },
                 modifier = Modifier.fillMaxWidth(),
                 textStyle = textStyle,
+                placeholder = { Text("Title", Modifier.fillMaxWidth(), style = textStyle) },
                 maxLines = 2,
             )
             OutlinedTextField(
@@ -103,6 +104,7 @@ fun ImagePageContent(
                 onValueChange = { date = DateField(it) },
                 modifier = Modifier.fillMaxWidth(),
                 textStyle = textStyle,
+                placeholder = { Text("YYYY-MM-DD", Modifier.fillMaxWidth(), style = textStyle) },
                 isError = !isDateValid,
                 visualTransformation = { DateField(it.text).getVisualTransformation() },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
