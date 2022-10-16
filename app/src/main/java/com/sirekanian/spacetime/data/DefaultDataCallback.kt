@@ -11,6 +11,7 @@ import com.sirekanian.spacetime.ui.DateField
 private val defaultImageUrls = listOf(
     "https://sirekanian.com/apod/image/2209/SnakingFilament_Friedman_960.jpg",
     "https://sirekanian.com/apod/image/2208/CygnusWall_Bogaerts_960.jpg",
+    "https://sirekanian.com/apod/image/2209/NGC7000_NB_2022_1024.jpg",
 )
 
 class DefaultDataCallback(resources: Resources) : RoomDatabase.Callback() {

@@ -1,7 +1,8 @@
 <resources>
     <array name="default_page_names">
-        <item>Война идёт</item>
-        <item>Навальный сидит</item>
+        <item>Война</item>
+        <item>Навальный</item>
+        <item>Немцов</item>
     </array>
     <plurals name="duration_days">
         <item quantity="one">%d день</item>

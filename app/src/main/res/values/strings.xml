@@ -1,12 +1,14 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name" translatable="false">Spacetime</string>
     <string-array name="default_page_names">
-        <item>The war goes on</item>
-        <item>Navalny in prison</item>
+        <item>The War</item>
+        <item>Navalny</item>
+        <item>Nemtsov</item>
     </string-array>
     <string-array name="default_page_dates" tools:ignore="TypographyDashes">
         <item>2022-02-24</item>
         <item>2021-01-17</item>
+        <item>2015-02-27</item>
     </string-array>
     <plurals name="duration_days">
         <item quantity="one">%d day</item>
