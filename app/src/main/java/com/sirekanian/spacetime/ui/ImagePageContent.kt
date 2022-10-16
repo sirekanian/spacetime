@@ -1,5 +1,6 @@
 package com.sirekanian.spacetime.ui
 
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
@@ -85,10 +86,12 @@ fun ImagePageContent(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .imePadding()
+            .systemBarsPadding()
+            .padding(top = 48.dp) // TODO 1203173026241869: remove hardcoded toolbar size
             .padding(16.dp),
-        verticalArrangement = Arrangement.Center,
     ) {
+        val topSpaceWeight by animateFloatAsState(if (isEditMode) 0f else 1f)
+        topSpaceWeight.let { weight -> if (weight > 0) Spacer(Modifier.weight(weight)) }
         val textStyle = MaterialTheme.typography.h2.copy(textAlign = TextAlign.Center)
         if (isEditMode) {
             OutlinedTextField(
@@ -136,5 +139,6 @@ fun ImagePageContent(
                 )
             }
         }
+        Spacer(Modifier.weight(1f))
     }
 }
