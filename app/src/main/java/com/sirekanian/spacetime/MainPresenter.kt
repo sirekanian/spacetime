@@ -7,12 +7,8 @@ import androidx.compose.ui.platform.LocalContext
 import com.sirekanian.spacetime.data.Repository
 import com.sirekanian.spacetime.data.api.ThumbnailApi
 import com.sirekanian.spacetime.ext.app
-import com.sirekanian.spacetime.model.GalleryPage
 import com.sirekanian.spacetime.model.ImagePage
-import com.sirekanian.spacetime.model.Page
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 @Composable
@@ -25,7 +21,6 @@ fun rememberMainPresenter(): MainPresenter {
 interface MainPresenter {
 
     val state: MainState
-    fun observePages(): Flow<List<Page>>
     fun savePage(page: ImagePage)
     fun removePage(page: ImagePage)
     fun loadGallery()
@@ -40,18 +35,23 @@ class MainPresenterImpl(
 
     override val state = MainState()
 
-    override fun observePages(): Flow<List<Page>> =
-        repository.observePages().map { it.plus(GalleryPage) }
+    init {
+        scope.launch {
+            updatePages()
+        }
+    }
 
     override fun savePage(page: ImagePage) {
         scope.launch {
             repository.savePage(page)
+            updatePages()
         }
     }
 
     override fun removePage(page: ImagePage) {
         scope.launch {
             repository.removePage(page)
+            updatePages()
         }
     }
 
@@ -59,6 +59,10 @@ class MainPresenterImpl(
         scope.launch {
             state.thumbnails = state.thumbnails + api.getThumbnails(state.nextDate)
         }
+    }
+
+    private suspend fun updatePages() {
+        state.pages = repository.getPages()
     }
 
 }

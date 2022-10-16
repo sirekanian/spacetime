@@ -4,8 +4,6 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.sirekanian.spacetime.model.Draft
@@ -19,7 +17,7 @@ import com.sirekanian.spacetime.ui.ImagePageContent
 @ExperimentalPagerApi
 fun MainScreen(presenter: MainPresenter) {
     val state = presenter.state
-    val pages by presenter.observePages().collectAsState(listOf())
+    val pages = state.pages.plus(GalleryPage)
     val insets = WindowInsets.systemBars.asPaddingValues()
     HorizontalPager(
         count = pages.size,

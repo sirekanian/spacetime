@@ -3,12 +3,10 @@ package com.sirekanian.spacetime.data
 import com.sirekanian.spacetime.data.local.PageDao
 import com.sirekanian.spacetime.data.local.PageEntity
 import com.sirekanian.spacetime.model.ImagePage
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 
 interface Repository {
 
-    fun observePages(): Flow<List<ImagePage>>
+    suspend fun getPages(): List<ImagePage>
     suspend fun savePage(page: ImagePage)
     suspend fun removePage(page: ImagePage)
 
@@ -16,8 +14,8 @@ interface Repository {
 
 class RepositoryImpl(private val dao: PageDao) : Repository {
 
-    override fun observePages(): Flow<List<ImagePage>> =
-        dao.observe().map { it.map(PageEntity::toModel) }
+    override suspend fun getPages(): List<ImagePage> =
+        dao.select().map(PageEntity::toModel)
 
     override suspend fun savePage(page: ImagePage) {
         dao.insert(page.toEntity())
