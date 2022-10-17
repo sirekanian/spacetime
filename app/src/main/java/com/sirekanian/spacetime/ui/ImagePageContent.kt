@@ -12,6 +12,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.pluralStringResource
@@ -94,14 +96,20 @@ fun ImagePageContent(
         topSpaceWeight.let { weight -> if (weight > 0) Spacer(Modifier.weight(weight)) }
         val textStyle = MaterialTheme.typography.h2.copy(textAlign = TextAlign.Center)
         if (isEditMode) {
+            val focusRequester = remember { FocusRequester() }
             OutlinedTextField(
                 value = name,
                 onValueChange = { name = it },
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .focusRequester(focusRequester),
                 textStyle = textStyle,
                 placeholder = { Text("Title", Modifier.fillMaxWidth(), style = textStyle) },
                 maxLines = 2,
             )
+            LaunchedEffect(Unit) {
+                focusRequester.requestFocus()
+            }
             OutlinedTextField(
                 value = date.value,
                 onValueChange = { date = DateField(it) },
