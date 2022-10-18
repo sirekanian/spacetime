@@ -5,7 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.runtime.*
@@ -66,7 +66,7 @@ fun ImagePageContent(
             verticalArrangement = Arrangement.SpaceBetween,
         ) {
             Row {
-                VectorIconButton(Icons.Default.ArrowBack, onClick = { isEditMode = false })
+                VectorIconButton(Icons.Default.Close, onClick = { isEditMode = false })
                 Spacer(Modifier.weight(1f))
                 if (name.isBlank()) {
                     TextButton(onClick = { onDelete() }) {
