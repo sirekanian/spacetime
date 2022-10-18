@@ -9,6 +9,7 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
@@ -59,30 +60,22 @@ fun ImagePageContent(
         }
     }
     DefaultAnimatedVisibility(visible = isEditMode) {
-        Column(
-            modifier = Modifier
-                .padding(insets)
-                .fillMaxSize(),
-            verticalArrangement = Arrangement.SpaceBetween,
-        ) {
-            Row {
-                VectorIconButton(Icons.Default.Close, onClick = { isEditMode = false })
-                Spacer(Modifier.weight(1f))
-                if (name.isBlank()) {
-                    TextButton(onClick = { onDelete() }) {
-                        Text("DELETE", color = MaterialTheme.colors.error)
-                    }
+        Row(Modifier.padding(insets)) {
+            VectorIconButton(Icons.Default.Close, onClick = { isEditMode = false })
+            Spacer(Modifier.weight(1f))
+            if (name.isBlank()) {
+                TextButton(onClick = { onDelete() }) {
+                    Text("DELETE", color = MaterialTheme.colors.error)
                 }
-                VectorIconButton(Icons.Default.Done, onClick = {
-                    if (date.isValid()) {
-                        onDone(ImagePage(page.id, name, page.url, date, blur))
-                        isEditMode = false
-                    } else {
-                        isDateValid = false
-                    }
-                })
             }
-            Slider(value = blur, onValueChange = { blur = it }, modifier = Modifier.padding(16.dp))
+            VectorIconButton(Icons.Default.Done, onClick = {
+                if (date.isValid()) {
+                    onDone(ImagePage(page.id, name, page.url, date, blur))
+                    isEditMode = false
+                } else {
+                    isDateValid = false
+                }
+            })
         }
     }
     Column(
@@ -144,6 +137,14 @@ fun ImagePageContent(
                         .fillMaxWidth()
                         .padding(16.dp),
                     style = textStyle,
+                )
+            }
+        }
+        Box(Modifier.height(80.dp), Alignment.Center) {
+            DefaultAnimatedVisibility(visible = isEditMode) {
+                Slider(
+                    value = blur,
+                    onValueChange = { blur = it },
                 )
             }
         }
