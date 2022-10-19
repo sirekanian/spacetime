@@ -1,18 +1,20 @@
 package com.sirekanian.spacetime.ui
 
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Done
-import androidx.compose.material.icons.filled.Edit
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.layout.ContentScale
@@ -53,12 +55,6 @@ fun ImagePageContent(
             .blur((blur * 29 + 3).dp),
         contentScale = ContentScale.Crop,
     )
-    DefaultAnimatedVisibility(visible = !isEditMode) {
-        Row(Modifier.padding(insets)) {
-            Spacer(Modifier.weight(1f))
-            VectorIconButton(Icons.Default.Edit, onClick = { isEditMode = true })
-        }
-    }
     DefaultAnimatedVisibility(visible = isEditMode) {
         Row(Modifier.padding(insets)) {
             VectorIconButton(Icons.Default.Close, onClick = { isEditMode = false })
@@ -117,8 +113,12 @@ fun ImagePageContent(
         } else {
             Text(
                 text = page.name,
-                modifier = Modifier
+                modifier = @OptIn(ExperimentalFoundationApi::class) Modifier
                     .fillMaxWidth()
+                    .clip(MaterialTheme.shapes.small)
+                    .combinedClickable(onLongClick = {
+                        isEditMode = true
+                    }) {}
                     .padding(16.dp),
                 style = textStyle,
                 overflow = TextOverflow.Ellipsis,
@@ -133,8 +133,12 @@ fun ImagePageContent(
                         days > 0 -> pluralStringResource(R.plurals.duration_in_days, days, days)
                         else -> pluralStringResource(R.plurals.duration_days, -days, -days)
                     },
-                    modifier = Modifier
+                    modifier = @OptIn(ExperimentalFoundationApi::class) Modifier
                         .fillMaxWidth()
+                        .clip(MaterialTheme.shapes.small)
+                        .combinedClickable(onLongClick = {
+                            isEditMode = true
+                        }) {}
                         .padding(16.dp),
                     style = textStyle,
                 )
