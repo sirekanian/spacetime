@@ -49,7 +49,7 @@ fun ImagePageContent(
     BackHandler(isEditMode) {
         state.editablePage = null
     }
-    var name by remember(isEditMode) { mutableStateOf(page.name) }
+    val name = remember(isEditMode) { NameField(page.name) }
     var date by remember(isEditMode) { mutableStateOf(page.date) }
     var blur by remember(isEditMode) { mutableStateOf(page.blur) }
     var isDateValid by remember(date) { mutableStateOf(true) }
@@ -85,14 +85,14 @@ fun ImagePageContent(
         Row(Modifier.padding(insets)) {
             VectorIconButton(Icons.Default.Close, onClick = { state.editablePage = null })
             Spacer(Modifier.weight(1f))
-            if (name.isBlank() && date.value.isEmpty()) {
+            if (name.field.text.isEmpty() && date.value.isEmpty()) {
                 TextButton(onClick = { onDelete() }) {
                     Text("DELETE", color = MaterialTheme.colors.error)
                 }
             } else {
                 VectorIconButton(Icons.Default.Done, onClick = {
                     if (date.isValid()) {
-                        onDone(ImagePage(page.id, name, page.url, date, blur))
+                        onDone(ImagePage(page.id, name.field.text, page.url, date, blur))
                     } else {
                         isDateValid = false
                     }
@@ -113,8 +113,8 @@ fun ImagePageContent(
         if (isEditMode) {
             val focusRequester = remember { FocusRequester() }
             OutlinedTextField(
-                value = name,
-                onValueChange = { name = it },
+                value = name.field,
+                onValueChange = { name.field = it },
                 modifier = Modifier
                     .fillMaxWidth()
                     .focusRequester(focusRequester),
