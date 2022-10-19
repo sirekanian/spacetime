@@ -93,7 +93,6 @@ fun ImagePageContent(
                 VectorIconButton(Icons.Default.Done, onClick = {
                     if (date.isValid()) {
                         onDone(ImagePage(page.id, name, page.url, date, blur))
-                        state.editablePage = null
                     } else {
                         isDateValid = false
                     }

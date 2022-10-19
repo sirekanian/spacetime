@@ -44,6 +44,7 @@ class MainPresenterImpl(
     }
 
     override fun savePage(page: ImagePage) {
+        state.editablePage = null
         scope.launch {
             repository.savePage(page)
             updatePages()
@@ -51,6 +52,7 @@ class MainPresenterImpl(
     }
 
     override fun removePage(page: ImagePage) {
+        state.editablePage = null
         scope.launch {
             repository.removePage(page)
             updatePages()

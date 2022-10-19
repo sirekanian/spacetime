@@ -27,6 +27,7 @@ fun MainScreen(presenter: MainPresenter) {
         state = state.pagerState,
         count = pages.size,
         key = { pages[it].id },
+        userScrollEnabled = state.editablePage == null,
     ) { index ->
         when (val page = pages[index]) {
             is ImagePage -> {
