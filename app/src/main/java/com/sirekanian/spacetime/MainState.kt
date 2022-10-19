@@ -18,6 +18,7 @@ class MainState {
 
     @OptIn(ExperimentalPagerApi::class)
     val pagerState = PagerState()
+    var editablePage by mutableStateOf<Int?>(null)
     var pages by mutableStateOf(listOf<ImagePage>())
     var draft by mutableStateOf<Draft?>(null)
     var thumbnails by mutableStateOf(listOf<Thumbnail>())

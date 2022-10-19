@@ -32,6 +32,7 @@ fun MainScreen(presenter: MainPresenter) {
             is ImagePage -> {
                 ImagePageContent(
                     insets,
+                    state,
                     page,
                     onDelete = { presenter.removePage(page) },
                     onDone = { presenter.savePage(it) }

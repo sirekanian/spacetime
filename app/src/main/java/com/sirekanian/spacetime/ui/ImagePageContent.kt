@@ -31,6 +31,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.sirekanian.spacetime.MainState
 import com.sirekanian.spacetime.R
 import com.sirekanian.spacetime.ext.DefaultAnimatedVisibility
 import com.sirekanian.spacetime.ext.VectorIconButton
@@ -39,13 +40,14 @@ import com.sirekanian.spacetime.model.ImagePage
 @Composable
 fun ImagePageContent(
     insets: PaddingValues,
+    state: MainState,
     page: ImagePage,
     onDelete: () -> Unit,
     onDone: (ImagePage) -> Unit,
 ) {
-    var isEditMode by remember { mutableStateOf(false) }
+    val isEditMode = state.editablePage == page.id
     BackHandler(isEditMode) {
-        isEditMode = false
+        state.editablePage = null
     }
     var name by remember(isEditMode) { mutableStateOf(page.name) }
     var date by remember(isEditMode) { mutableStateOf(page.date) }
@@ -81,7 +83,7 @@ fun ImagePageContent(
     )
     DefaultAnimatedVisibility(visible = isEditMode) {
         Row(Modifier.padding(insets)) {
-            VectorIconButton(Icons.Default.Close, onClick = { isEditMode = false })
+            VectorIconButton(Icons.Default.Close, onClick = { state.editablePage = null })
             Spacer(Modifier.weight(1f))
             if (name.isBlank() && date.value.isEmpty()) {
                 TextButton(onClick = { onDelete() }) {
@@ -91,7 +93,7 @@ fun ImagePageContent(
                 VectorIconButton(Icons.Default.Done, onClick = {
                     if (date.isValid()) {
                         onDone(ImagePage(page.id, name, page.url, date, blur))
-                        isEditMode = false
+                        state.editablePage = null
                     } else {
                         isDateValid = false
                     }
@@ -143,7 +145,7 @@ fun ImagePageContent(
                     .fillMaxWidth()
                     .clip(MaterialTheme.shapes.small)
                     .combinedClickable(onLongClick = {
-                        isEditMode = true
+                        state.editablePage = page.id
                         haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                     }) {}
                     .padding(16.dp),
@@ -164,7 +166,7 @@ fun ImagePageContent(
                         .fillMaxWidth()
                         .clip(MaterialTheme.shapes.small)
                         .combinedClickable(onLongClick = {
-                            isEditMode = true
+                            state.editablePage = page.id
                             haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                         }) {}
                         .padding(16.dp),
