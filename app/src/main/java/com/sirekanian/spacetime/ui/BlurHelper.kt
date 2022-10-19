@@ -14,7 +14,7 @@ class BlurHelper(context: Context, private val bitmap: Bitmap) {
     private val script = RenderScript.create(context)
     private val input = Allocation.createFromBitmap(script, bitmap)
     private val output = Allocation.createTyped(script, input.type)
-    private val blur = ScriptIntrinsicBlur.create(script, Element.U8(script))
+    private val blur = ScriptIntrinsicBlur.create(script, Element.U8_4(script))
 
     fun blur(radius: Float) {
         blur.setRadius(radius)
