@@ -18,8 +18,10 @@ import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
@@ -115,6 +117,7 @@ fun ImagePageContent(
                 singleLine = true,
             )
         } else {
+            val haptic = LocalHapticFeedback.current
             Text(
                 text = page.name,
                 modifier = @OptIn(ExperimentalFoundationApi::class) Modifier
@@ -122,6 +125,7 @@ fun ImagePageContent(
                     .clip(MaterialTheme.shapes.small)
                     .combinedClickable(onLongClick = {
                         isEditMode = true
+                        haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                     }) {}
                     .padding(16.dp),
                 style = textStyle,
@@ -142,6 +146,7 @@ fun ImagePageContent(
                         .clip(MaterialTheme.shapes.small)
                         .combinedClickable(onLongClick = {
                             isEditMode = true
+                            haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                         }) {}
                         .padding(16.dp),
                     style = textStyle,
