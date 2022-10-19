@@ -65,19 +65,20 @@ fun ImagePageContent(
         Row(Modifier.padding(insets)) {
             VectorIconButton(Icons.Default.Close, onClick = { isEditMode = false })
             Spacer(Modifier.weight(1f))
-            if (name.isBlank()) {
+            if (name.isBlank() && date.value.isEmpty()) {
                 TextButton(onClick = { onDelete() }) {
                     Text("DELETE", color = MaterialTheme.colors.error)
                 }
+            } else {
+                VectorIconButton(Icons.Default.Done, onClick = {
+                    if (date.isValid()) {
+                        onDone(ImagePage(page.id, name, page.url, date, blur))
+                        isEditMode = false
+                    } else {
+                        isDateValid = false
+                    }
+                })
             }
-            VectorIconButton(Icons.Default.Done, onClick = {
-                if (date.isValid()) {
-                    onDone(ImagePage(page.id, name, page.url, date, blur))
-                    isEditMode = false
-                } else {
-                    isDateValid = false
-                }
-            })
         }
     }
     Column(
