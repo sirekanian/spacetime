@@ -11,6 +11,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Done
+import androidx.compose.material.ripple.LocalRippleTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -106,11 +107,15 @@ fun ImagePageContent(
             .systemBarsPadding()
             .padding(top = 48.dp) // TODO 1203173026241869: remove hardcoded toolbar size
             .padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
         val topSpaceWeight by animateFloatAsState(if (isEditMode) 0f else 1f)
         topSpaceWeight.let { weight -> if (weight > 0) Spacer(Modifier.weight(weight)) }
         val textStyle = MaterialTheme.typography.h2.copy(textAlign = TextAlign.Center)
         if (isEditMode) {
+            val ripple = LocalRippleTheme.current
+            val rippleAlpha = ripple.rippleAlpha().pressedAlpha
+            val rippleColor = ripple.defaultColor().copy(alpha = rippleAlpha)
             val focusRequester = remember { FocusRequester() }
             OutlinedTextField(
                 value = name.field,
@@ -121,6 +126,7 @@ fun ImagePageContent(
                 textStyle = textStyle,
                 placeholder = { Text("Title", Modifier.fillMaxWidth(), style = textStyle) },
                 maxLines = 2,
+                colors = TextFieldDefaults.outlinedTextFieldColors(backgroundColor = rippleColor),
             )
             LaunchedEffect(Unit) {
                 focusRequester.requestFocus()
@@ -135,6 +141,7 @@ fun ImagePageContent(
                 visualTransformation = { DateField(it.text).getVisualTransformation() },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 singleLine = true,
+                colors = TextFieldDefaults.outlinedTextFieldColors(backgroundColor = rippleColor),
             )
         } else {
             val haptic = LocalHapticFeedback.current
@@ -173,7 +180,7 @@ fun ImagePageContent(
                 )
             }
         }
-        Box(Modifier.height(80.dp), Alignment.Center) {
+        Box(Modifier.height(48.dp), Alignment.Center) {
             DefaultAnimatedVisibility(visible = isEditMode) {
                 Slider(
                     value = blur,
