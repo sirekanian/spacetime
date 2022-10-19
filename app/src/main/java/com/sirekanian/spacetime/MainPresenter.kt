@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.platform.LocalContext
+import com.google.accompanist.pager.ExperimentalPagerApi
 import com.sirekanian.spacetime.data.Repository
 import com.sirekanian.spacetime.data.api.ThumbnailApi
 import com.sirekanian.spacetime.ext.app
@@ -24,6 +25,7 @@ interface MainPresenter {
     fun savePage(page: ImagePage)
     fun removePage(page: ImagePage)
     fun loadGallery()
+    fun openPageByIndex(index: Int)
 
 }
 
@@ -58,6 +60,13 @@ class MainPresenterImpl(
     override fun loadGallery() {
         scope.launch {
             state.thumbnails = state.thumbnails + api.getThumbnails(state.nextDate)
+        }
+    }
+
+    override fun openPageByIndex(index: Int) {
+        scope.launch {
+            @OptIn(ExperimentalPagerApi::class)
+            state.pagerState.animateScrollToPage(index)
         }
     }
 

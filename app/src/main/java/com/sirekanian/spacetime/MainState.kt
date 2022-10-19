@@ -4,6 +4,8 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import com.google.accompanist.pager.ExperimentalPagerApi
+import com.google.accompanist.pager.PagerState
 import com.sirekanian.spacetime.ext.currentDate
 import com.sirekanian.spacetime.ext.minusMonths
 import com.sirekanian.spacetime.ext.withDayOfMonth
@@ -14,6 +16,8 @@ import kotlinx.datetime.LocalDate
 
 class MainState {
 
+    @OptIn(ExperimentalPagerApi::class)
+    val pagerState = PagerState()
     var pages by mutableStateOf(listOf<ImagePage>())
     var draft by mutableStateOf<Draft?>(null)
     var thumbnails by mutableStateOf(listOf<Thumbnail>())

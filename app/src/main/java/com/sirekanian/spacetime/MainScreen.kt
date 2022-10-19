@@ -1,5 +1,6 @@
 package com.sirekanian.spacetime
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.systemBars
@@ -17,9 +18,13 @@ import com.sirekanian.spacetime.ui.ImagePageContent
 @ExperimentalPagerApi
 fun MainScreen(presenter: MainPresenter) {
     val state = presenter.state
+    BackHandler(state.pagerState.currentPage > 0) {
+        presenter.openPageByIndex(0)
+    }
     val pages = state.pages.plus(GalleryPage)
     val insets = WindowInsets.systemBars.asPaddingValues()
     HorizontalPager(
+        state = state.pagerState,
         count = pages.size,
         key = { pages[it].id },
     ) { index ->

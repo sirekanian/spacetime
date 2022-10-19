@@ -1,5 +1,6 @@
 package com.sirekanian.spacetime.ui
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
@@ -40,6 +41,9 @@ fun ImagePageContent(
     onDone: (ImagePage) -> Unit,
 ) {
     var isEditMode by remember { mutableStateOf(false) }
+    BackHandler(isEditMode) {
+        isEditMode = false
+    }
     var name by remember(isEditMode) { mutableStateOf(page.name) }
     var date by remember(isEditMode) { mutableStateOf(page.date) }
     var blur by remember(isEditMode) { mutableStateOf(page.blur) }
