@@ -1,5 +1,6 @@
 package com.sirekanian.spacetime.ui
 
+import android.os.Build
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -54,11 +55,28 @@ fun ImagePageContent(
         model = ImageRequest.Builder(LocalContext.current)
             .data(page.url)
             .crossfade(true)
+            .let {
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
+                    val context = LocalContext.current
+                    val blurTransformation = remember(blur) {
+                        BlurTransformation(context, blur * 22 + 3, page.url)
+                    }
+                    it.transformations(blurTransformation)
+                } else {
+                    it
+                }
+            }
             .build(),
         contentDescription = null,
         modifier = Modifier
             .fillMaxSize()
-            .blur((blur * 29 + 3).dp),
+            .let {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                    it.blur((blur * 22 + 3).dp)
+                } else {
+                    it
+                }
+            },
         contentScale = ContentScale.Crop,
     )
     DefaultAnimatedVisibility(visible = isEditMode) {
