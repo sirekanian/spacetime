@@ -10,6 +10,7 @@ import com.sirekanian.spacetime.ext.currentDate
 import com.sirekanian.spacetime.ext.minusMonths
 import com.sirekanian.spacetime.ext.withDayOfMonth
 import com.sirekanian.spacetime.model.Draft
+import com.sirekanian.spacetime.model.EditablePage
 import com.sirekanian.spacetime.model.ImagePage
 import com.sirekanian.spacetime.model.Thumbnail
 import kotlinx.datetime.LocalDate
@@ -18,7 +19,7 @@ class MainState {
 
     @OptIn(ExperimentalPagerApi::class)
     val pagerState = PagerState()
-    var editablePage by mutableStateOf<Int?>(null)
+    var editablePage by mutableStateOf<EditablePage?>(null)
     var pages by mutableStateOf(listOf<ImagePage>())
     var draft by mutableStateOf<Draft?>(null)
     var thumbnails by mutableStateOf(listOf<Thumbnail>())

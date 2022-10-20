@@ -36,6 +36,8 @@ import com.sirekanian.spacetime.MainState
 import com.sirekanian.spacetime.R
 import com.sirekanian.spacetime.ext.DefaultAnimatedVisibility
 import com.sirekanian.spacetime.ext.VectorIconButton
+import com.sirekanian.spacetime.model.EditablePage
+import com.sirekanian.spacetime.model.EditablePage.Autofocus
 import com.sirekanian.spacetime.model.ImagePage
 
 @Composable
@@ -46,7 +48,7 @@ fun ImagePageContent(
     onDelete: () -> Unit,
     onDone: (ImagePage) -> Unit,
 ) {
-    val isEditMode = state.editablePage == page.id
+    val isEditMode = state.editablePage?.page?.id == page.id
     BackHandler(isEditMode) {
         state.editablePage = null
     }
@@ -116,25 +118,25 @@ fun ImagePageContent(
             val ripple = LocalRippleTheme.current
             val rippleAlpha = ripple.rippleAlpha().pressedAlpha
             val rippleColor = ripple.defaultColor().copy(alpha = rippleAlpha)
-            val focusRequester = remember { FocusRequester() }
+            val nameFocusRequester = remember { FocusRequester() }
+            val dateFocusRequester = remember { FocusRequester() }
             OutlinedTextField(
                 value = name.field,
                 onValueChange = { name.field = it },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .focusRequester(focusRequester),
+                    .focusRequester(nameFocusRequester),
                 textStyle = textStyle,
                 placeholder = { Text("Title", Modifier.fillMaxWidth(), style = textStyle) },
                 maxLines = 2,
                 colors = TextFieldDefaults.outlinedTextFieldColors(backgroundColor = rippleColor),
             )
-            LaunchedEffect(Unit) {
-                focusRequester.requestFocus()
-            }
             OutlinedTextField(
                 value = date.value,
                 onValueChange = { date = DateField(it) },
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .focusRequester(dateFocusRequester),
                 textStyle = textStyle,
                 placeholder = { Text("YYYY-MM-DD", Modifier.fillMaxWidth(), style = textStyle) },
                 isError = !isDateValid,
@@ -143,6 +145,13 @@ fun ImagePageContent(
                 singleLine = true,
                 colors = TextFieldDefaults.outlinedTextFieldColors(backgroundColor = rippleColor),
             )
+            LaunchedEffect(Unit) {
+                when (state.editablePage?.autofocus) {
+                    Autofocus.NAME -> nameFocusRequester
+                    Autofocus.DATE -> dateFocusRequester
+                    null -> null
+                }?.requestFocus()
+            }
         } else {
             val haptic = LocalHapticFeedback.current
             Text(
@@ -151,7 +160,7 @@ fun ImagePageContent(
                     .fillMaxWidth()
                     .clip(MaterialTheme.shapes.small)
                     .combinedClickable(onLongClick = {
-                        state.editablePage = page.id
+                        state.editablePage = EditablePage(page, Autofocus.NAME)
                         haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                     }) {}
                     .padding(16.dp),
@@ -172,7 +181,7 @@ fun ImagePageContent(
                         .fillMaxWidth()
                         .clip(MaterialTheme.shapes.small)
                         .combinedClickable(onLongClick = {
-                            state.editablePage = page.id
+                            state.editablePage = EditablePage(page, Autofocus.DATE)
                             haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                         }) {}
                         .padding(16.dp),
