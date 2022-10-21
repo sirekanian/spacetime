@@ -8,4 +8,5 @@ import androidx.compose.ui.text.input.TextFieldValue
 
 class NameField(name: String) {
     var field by mutableStateOf(TextFieldValue(name, TextRange(name.length)))
+    fun isValid() = field.text.isNotEmpty()
 }

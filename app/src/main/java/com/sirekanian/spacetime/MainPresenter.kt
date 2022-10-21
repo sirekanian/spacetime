@@ -46,6 +46,7 @@ class MainPresenterImpl(
 
     override fun savePage(page: ImagePage) {
         state.editablePage = null
+        state.draft = null
         scope.launch {
             repository.savePage(page)
             updatePages()

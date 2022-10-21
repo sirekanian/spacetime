@@ -22,7 +22,7 @@ class DefaultDataCallback(resources: Resources) : RoomDatabase.Callback() {
         val names = resources.getStringArray(R.array.default_page_names)
         val dates = resources.getStringArray(R.array.default_page_dates)
         defaultPages = names.zip(defaultImageUrls).zip(dates) { (name, url), date ->
-            createImagePage(name, url, DateField(date))
+            createImagePage(name, url, DateField(date), blur = 0.5f)
         }
     }
 

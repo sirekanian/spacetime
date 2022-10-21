@@ -45,6 +45,7 @@ fun ImagePageContent(
     val name = remember(isEditMode) { NameField(page.name) }
     var date by remember(isEditMode) { mutableStateOf(page.date) }
     var blur by remember(isEditMode) { mutableStateOf(page.blur) }
+    var isNameValid by remember(name.field) { mutableStateOf(true) }
     var isDateValid by remember(date) { mutableStateOf(true) }
     PageBackground(
         url = page.url,
@@ -60,10 +61,10 @@ fun ImagePageContent(
                 }
             } else {
                 VectorIconButton(Icons.Default.Done, onClick = {
-                    if (date.isValid()) {
+                    isNameValid = name.isValid()
+                    isDateValid = date.isValid()
+                    if (isNameValid && isDateValid) {
                         onDone(ImagePage(page.id, name.field.text, page.url, date, blur))
-                    } else {
-                        isDateValid = false
                     }
                 })
             }
@@ -83,6 +84,7 @@ fun ImagePageContent(
         if (isEditMode) {
             EditForm(
                 name = name,
+                isNameValid = isNameValid,
                 date = date,
                 onDateChange = { date = DateField(it) },
                 isDateValid = isDateValid,

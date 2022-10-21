@@ -10,7 +10,7 @@ import com.google.accompanist.pager.HorizontalPager
 import com.sirekanian.spacetime.model.Draft
 import com.sirekanian.spacetime.model.GalleryPage
 import com.sirekanian.spacetime.model.ImagePage
-import com.sirekanian.spacetime.ui.DraftAlertDialog
+import com.sirekanian.spacetime.ui.DraftPage
 import com.sirekanian.spacetime.ui.GalleryPageContent
 import com.sirekanian.spacetime.ui.ImagePageContent
 
@@ -49,5 +49,5 @@ fun MainScreen(presenter: MainPresenter) {
             }
         }
     }
-    DraftAlertDialog(state, onConfirm = { presenter.savePage(it) })
+    DraftPage(insets, state, onDone = { presenter.savePage(it) })
 }

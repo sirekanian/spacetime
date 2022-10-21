@@ -13,12 +13,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import com.sirekanian.spacetime.model.EditablePage.Autofocus
 
 @Composable
 fun EditForm(
     name: NameField,
+    isNameValid: Boolean,
     date: DateField,
     onDateChange: (String) -> Unit,
     isDateValid: Boolean,
@@ -38,6 +40,8 @@ fun EditForm(
             .focusRequester(nameFocusRequester),
         textStyle = textStyle,
         placeholder = { Text("Title", Modifier.fillMaxWidth(), style = textStyle) },
+        isError = !isNameValid,
+        keyboardOptions = KeyboardOptions(KeyboardCapitalization.Sentences),
         maxLines = 2,
         colors = TextFieldDefaults.outlinedTextFieldColors(backgroundColor = rippleColor),
     )
