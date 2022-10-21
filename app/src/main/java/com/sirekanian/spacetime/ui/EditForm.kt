@@ -21,8 +21,7 @@ import com.sirekanian.spacetime.model.EditablePage.Autofocus
 fun EditForm(
     name: NameField,
     isNameValid: Boolean,
-    date: DateField,
-    onDateChange: (String) -> Unit,
+    date: DateFieldWrapper,
     isDateValid: Boolean,
     autofocus: Autofocus?,
     textStyle: TextStyle,
@@ -46,8 +45,8 @@ fun EditForm(
         colors = TextFieldDefaults.outlinedTextFieldColors(backgroundColor = rippleColor),
     )
     OutlinedTextField(
-        value = date.value,
-        onValueChange = onDateChange,
+        value = date.field.value,
+        onValueChange = { date.field = DateField(it) },
         modifier = Modifier
             .fillMaxWidth()
             .focusRequester(dateFocusRequester),

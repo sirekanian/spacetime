@@ -43,7 +43,7 @@ fun ImagePageContent(
         state.editablePage = null
     }
     val name = remember(isEditMode) { NameField(page.name) }
-    var date by remember(isEditMode) { mutableStateOf(page.date) }
+    val date = remember(isEditMode) { DateFieldWrapper(page.date) }
     var blur by remember(isEditMode) { mutableStateOf(page.blur) }
     var isNameValid by remember(name.field) { mutableStateOf(true) }
     var isDateValid by remember(date) { mutableStateOf(true) }
@@ -55,7 +55,7 @@ fun ImagePageContent(
         Row(Modifier.padding(insets)) {
             VectorIconButton(Icons.Default.Close, onClick = { state.editablePage = null })
             Spacer(Modifier.weight(1f))
-            if (name.field.text.isEmpty() && date.value.isEmpty()) {
+            if (name.isEmpty() && date.isEmpty()) {
                 TextButton(onClick = { onDelete() }) {
                     Text("DELETE", color = MaterialTheme.colors.error)
                 }
@@ -64,7 +64,7 @@ fun ImagePageContent(
                     isNameValid = name.isValid()
                     isDateValid = date.isValid()
                     if (isNameValid && isDateValid) {
-                        onDone(ImagePage(page.id, name.field.text, page.url, date, blur))
+                        onDone(ImagePage(page.id, name.field.text, page.url, date.field, blur))
                     }
                 })
             }
@@ -86,7 +86,6 @@ fun ImagePageContent(
                 name = name,
                 isNameValid = isNameValid,
                 date = date,
-                onDateChange = { date = DateField(it) },
                 isDateValid = isDateValid,
                 autofocus = state.editablePage?.autofocus,
                 textStyle = textStyle,

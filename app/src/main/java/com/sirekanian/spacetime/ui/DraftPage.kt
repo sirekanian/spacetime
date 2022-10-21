@@ -26,10 +26,10 @@ fun DraftPage(insets: PaddingValues, state: MainState, onDone: (ImagePage) -> Un
         state.draft = null
     }
     val name = remember { NameField("") }
-    var date by remember { mutableStateOf(DateField("")) }
+    val date = remember { DateFieldWrapper(DateField("")) }
     var blur by remember { mutableStateOf(0.5f) }
     var isNameValid by remember(name.field) { mutableStateOf(true) }
-    var isDateValid by remember(date) { mutableStateOf(true) }
+    var isDateValid by remember(date.field) { mutableStateOf(true) }
     PageBackground(
         url = draft.url,
         blur = blur,
@@ -41,7 +41,7 @@ fun DraftPage(insets: PaddingValues, state: MainState, onDone: (ImagePage) -> Un
             isNameValid = name.isValid()
             isDateValid = date.isValid()
             if (isNameValid && isDateValid) {
-                onDone(createImagePage(name.field.text, draft.url, date, blur))
+                onDone(createImagePage(name.field.text, draft.url, date.field, blur))
             }
         })
     }
@@ -58,7 +58,6 @@ fun DraftPage(insets: PaddingValues, state: MainState, onDone: (ImagePage) -> Un
             name = name,
             isNameValid = isNameValid,
             date = date,
-            onDateChange = { date = DateField(it) },
             isDateValid = isDateValid,
             autofocus = Autofocus.NAME,
             textStyle = textStyle,
