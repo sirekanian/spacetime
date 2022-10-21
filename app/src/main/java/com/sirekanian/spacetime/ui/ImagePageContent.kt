@@ -42,11 +42,11 @@ fun ImagePageContent(
     BackHandler(isEditMode) {
         state.editablePage = null
     }
-    val name = remember(isEditMode) { NameField(page.name) }
-    val date = remember(isEditMode) { DateFieldWrapper(page.date) }
+    val name = remember { NameField(page.name) }
+    val date = remember { DateFieldWrapper(page.date) }
     var blur by remember(isEditMode) { mutableStateOf(page.blur) }
     var isNameValid by remember(name.field) { mutableStateOf(true) }
-    var isDateValid by remember(date) { mutableStateOf(true) }
+    var isDateValid by remember(date.field) { mutableStateOf(true) }
     PageBackground(
         url = page.url,
         blur = blur,
@@ -64,7 +64,7 @@ fun ImagePageContent(
                     isNameValid = name.isValid()
                     isDateValid = date.isValid()
                     if (isNameValid && isDateValid) {
-                        onDone(ImagePage(page.id, name.field.text, page.url, date.field.value, blur))
+                        onDone(ImagePage(page.id, name.field.text, page.url, date.field.text, blur))
                     }
                 })
             }

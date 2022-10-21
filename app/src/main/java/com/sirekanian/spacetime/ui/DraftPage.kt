@@ -41,7 +41,7 @@ fun DraftPage(insets: PaddingValues, state: MainState, onDone: (ImagePage) -> Un
             isNameValid = name.isValid()
             isDateValid = date.isValid()
             if (isNameValid && isDateValid) {
-                onDone(createImagePage(name.field.text, draft.url, date.field.value, blur))
+                onDone(createImagePage(name.field.text, draft.url, date.field.text, blur))
             }
         })
     }

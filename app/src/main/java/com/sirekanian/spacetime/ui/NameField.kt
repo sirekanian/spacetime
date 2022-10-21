@@ -7,7 +7,18 @@ import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
 
 class NameField(name: String) {
+
     var field by mutableStateOf(TextFieldValue(name, TextRange(name.length)))
-    fun isEmpty() = field.text.isEmpty()
-    fun isValid() = field.text.isNotEmpty()
+        private set
+
+    fun onValueChange(field: TextFieldValue) {
+        this.field = field
+    }
+
+    fun isEmpty(): Boolean =
+        field.text.isEmpty()
+
+    fun isValid(): Boolean =
+        field.text.isNotEmpty()
+
 }

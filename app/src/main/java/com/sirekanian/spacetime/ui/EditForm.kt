@@ -33,7 +33,7 @@ fun EditForm(
     val dateFocusRequester = remember { FocusRequester() }
     OutlinedTextField(
         value = name.field,
-        onValueChange = { name.field = it },
+        onValueChange = name::onValueChange,
         modifier = Modifier
             .fillMaxWidth()
             .focusRequester(nameFocusRequester),
@@ -45,8 +45,8 @@ fun EditForm(
         colors = TextFieldDefaults.outlinedTextFieldColors(backgroundColor = rippleColor),
     )
     OutlinedTextField(
-        value = date.field.value,
-        onValueChange = { date.field = DateField(it) },
+        value = date.field,
+        onValueChange = date::onValueChange,
         modifier = Modifier
             .fillMaxWidth()
             .focusRequester(dateFocusRequester),
