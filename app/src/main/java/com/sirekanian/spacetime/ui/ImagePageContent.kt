@@ -32,6 +32,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.sirekanian.spacetime.D
 import com.sirekanian.spacetime.MainState
 import com.sirekanian.spacetime.R
 import com.sirekanian.spacetime.ext.DefaultAnimatedVisibility
@@ -107,8 +108,8 @@ fun ImagePageContent(
         modifier = Modifier
             .fillMaxSize()
             .systemBarsPadding()
-            .padding(top = 48.dp) // TODO 1203173026241869: remove hardcoded toolbar size
-            .padding(16.dp),
+            .padding(top = D.toolbarHeight)
+            .padding(vertical = 8.dp, horizontal = 16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
         val topSpaceWeight by animateFloatAsState(if (isEditMode) 0f else 1f)
