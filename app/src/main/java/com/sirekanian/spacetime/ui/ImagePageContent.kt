@@ -6,27 +6,22 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Done
-import androidx.compose.material.ripple.LocalRippleTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -116,43 +111,14 @@ fun ImagePageContent(
         topSpaceWeight.let { weight -> if (weight > 0) Spacer(Modifier.weight(weight)) }
         val textStyle = MaterialTheme.typography.h2.copy(textAlign = TextAlign.Center)
         if (isEditMode) {
-            val ripple = LocalRippleTheme.current
-            val rippleAlpha = ripple.rippleAlpha().pressedAlpha
-            val rippleColor = ripple.defaultColor().copy(alpha = rippleAlpha)
-            val nameFocusRequester = remember { FocusRequester() }
-            val dateFocusRequester = remember { FocusRequester() }
-            OutlinedTextField(
-                value = name.field,
-                onValueChange = { name.field = it },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .focusRequester(nameFocusRequester),
+            EditForm(
+                name = name,
+                date = date,
+                onDateChange = { date = DateField(it) },
+                isDateValid = isDateValid,
+                autofocus = state.editablePage?.autofocus,
                 textStyle = textStyle,
-                placeholder = { Text("Title", Modifier.fillMaxWidth(), style = textStyle) },
-                maxLines = 2,
-                colors = TextFieldDefaults.outlinedTextFieldColors(backgroundColor = rippleColor),
             )
-            OutlinedTextField(
-                value = date.value,
-                onValueChange = { date = DateField(it) },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .focusRequester(dateFocusRequester),
-                textStyle = textStyle,
-                placeholder = { Text("YYYY-MM-DD", Modifier.fillMaxWidth(), style = textStyle) },
-                isError = !isDateValid,
-                visualTransformation = { DateField(it.text).getVisualTransformation() },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                singleLine = true,
-                colors = TextFieldDefaults.outlinedTextFieldColors(backgroundColor = rippleColor),
-            )
-            LaunchedEffect(Unit) {
-                when (state.editablePage?.autofocus) {
-                    Autofocus.NAME -> nameFocusRequester
-                    Autofocus.DATE -> dateFocusRequester
-                    null -> null
-                }?.requestFocus()
-            }
         } else {
             val haptic = LocalHapticFeedback.current
             Text(
