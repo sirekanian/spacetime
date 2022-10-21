@@ -1,6 +1,5 @@
 package com.sirekanian.spacetime.ui
 
-import android.os.Build
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -14,19 +13,14 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
-import coil.request.ImageRequest
 import com.sirekanian.spacetime.D
 import com.sirekanian.spacetime.MainState
 import com.sirekanian.spacetime.R
@@ -52,33 +46,9 @@ fun ImagePageContent(
     var date by remember(isEditMode) { mutableStateOf(page.date) }
     var blur by remember(isEditMode) { mutableStateOf(page.blur) }
     var isDateValid by remember(date) { mutableStateOf(true) }
-    AsyncImage(
-        model = ImageRequest.Builder(LocalContext.current)
-            .data(page.url)
-            .crossfade(true)
-            .let {
-                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
-                    val context = LocalContext.current
-                    val blurTransformation = remember(blur) {
-                        BlurTransformation(context, blur * 22 + 3, page.url)
-                    }
-                    it.transformations(blurTransformation)
-                } else {
-                    it
-                }
-            }
-            .build(),
-        contentDescription = null,
-        modifier = Modifier
-            .fillMaxSize()
-            .let {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                    it.blur((blur * 22 + 3).dp)
-                } else {
-                    it
-                }
-            },
-        contentScale = ContentScale.Crop,
+    PageBackground(
+        url = page.url,
+        blur = blur,
     )
     DefaultAnimatedVisibility(visible = isEditMode) {
         Row(Modifier.padding(insets)) {
