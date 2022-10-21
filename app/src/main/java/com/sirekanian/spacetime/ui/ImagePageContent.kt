@@ -64,7 +64,7 @@ fun ImagePageContent(
                     isNameValid = name.isValid()
                     isDateValid = date.isValid()
                     if (isNameValid && isDateValid) {
-                        onDone(ImagePage(page.id, name.field.text, page.url, date.field, blur))
+                        onDone(ImagePage(page.id, name.field.text, page.url, date.field.value, blur))
                     }
                 })
             }
@@ -106,7 +106,7 @@ fun ImagePageContent(
                 overflow = TextOverflow.Ellipsis,
                 maxLines = 2,
             )
-            page.date.getRelativeDays()?.let { days ->
+            DateField(page.date).getRelativeDays()?.let { days ->
                 Text(
                     text = @OptIn(ExperimentalComposeUiApi::class) when {
                         days == 0 -> stringResource(R.string.duration_today)
