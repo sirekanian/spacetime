@@ -21,7 +21,7 @@ fun MainScreen(presenter: MainPresenter) {
     BackHandler(state.pagerState.currentPage > 0) {
         presenter.openPageByIndex(0)
     }
-    val pages = state.pages.plus(GalleryPage)
+    val pages = state.pages
     val insets = WindowInsets.systemBars.asPaddingValues()
     HorizontalPager(
         state = state.pagerState,

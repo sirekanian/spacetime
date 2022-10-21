@@ -8,6 +8,7 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.sirekanian.spacetime.data.Repository
 import com.sirekanian.spacetime.data.api.ThumbnailApi
 import com.sirekanian.spacetime.ext.app
+import com.sirekanian.spacetime.model.GalleryPage
 import com.sirekanian.spacetime.model.ImagePage
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -73,7 +74,7 @@ class MainPresenterImpl(
     }
 
     private suspend fun updatePages() {
-        state.pages = repository.getPages()
+        state.pages = repository.getPages().plus(GalleryPage)
     }
 
 }
