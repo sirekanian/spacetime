@@ -6,6 +6,7 @@ import androidx.compose.ui.text.input.OffsetMapping
 import androidx.compose.ui.text.input.TransformedText
 import com.sirekanian.spacetime.ext.currentDate
 import kotlinx.datetime.LocalDate
+import kotlinx.datetime.daysUntil
 
 private val offsetMapping = object : OffsetMapping {
     override fun originalToTransformed(offset: Int): Int =
@@ -34,7 +35,7 @@ class DateField(value: String) {
         getLocalDate() != null
 
     fun getRelativeDays(): Int? =
-        getLocalDate()?.toEpochDays()?.minus(currentDate().toEpochDays())
+        getLocalDate()?.daysUntil(currentDate())
 
     private fun getLocalDate(): LocalDate? {
         if (value.length == 8) {

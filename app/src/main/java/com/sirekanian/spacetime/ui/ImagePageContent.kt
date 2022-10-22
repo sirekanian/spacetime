@@ -111,10 +111,10 @@ fun ImagePageContent(
                 Text(
                     text = @OptIn(ExperimentalComposeUiApi::class) when {
                         days == 0 -> stringResource(R.string.duration_today)
-                        days == 1 -> stringResource(R.string.duration_tomorrow)
-                        days == -1 -> stringResource(R.string.duration_yesterday)
-                        days > 0 -> pluralStringResource(R.plurals.duration_in_days, days, days)
-                        else -> pluralStringResource(R.plurals.duration_days, -days, -days)
+                        days == -1 -> stringResource(R.string.duration_tomorrow)
+                        days == 1 -> stringResource(R.string.duration_yesterday)
+                        days < 0 -> pluralStringResource(R.plurals.duration_in_days, -days, -days)
+                        else -> pluralStringResource(R.plurals.duration_days, days, days)
                     },
                     modifier = @OptIn(ExperimentalFoundationApi::class) Modifier
                         .fillMaxWidth()
