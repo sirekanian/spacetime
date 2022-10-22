@@ -35,8 +35,10 @@ fun MainScreen(presenter: MainPresenter) {
             is ImagePage -> {
                 ImagePageContent(
                     insets,
-                    state,
                     page,
+                    state.editablePage,
+                    onEdit = { state.editablePage = it },
+                    onClose = { state.editablePage = null },
                     onDelete = { presenter.removePage(page) },
                     onDone = { presenter.savePage(it) }
                 )

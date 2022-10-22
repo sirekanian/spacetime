@@ -22,7 +22,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.sirekanian.spacetime.D
-import com.sirekanian.spacetime.MainState
 import com.sirekanian.spacetime.R
 import com.sirekanian.spacetime.ext.DefaultAnimatedVisibility
 import com.sirekanian.spacetime.ext.VectorIconButton
@@ -33,14 +32,16 @@ import com.sirekanian.spacetime.model.ImagePage
 @Composable
 fun ImagePageContent(
     insets: PaddingValues,
-    state: MainState,
     page: ImagePage,
+    editablePage: EditablePage?,
+    onEdit: (EditablePage) -> Unit,
+    onClose: () -> Unit,
     onDelete: () -> Unit,
     onDone: (ImagePage) -> Unit,
 ) {
-    val isEditMode = state.editablePage?.page?.id == page.id
+    val isEditMode = editablePage?.page?.id == page.id
     BackHandler(isEditMode) {
-        state.editablePage = null
+        onClose()
     }
     val name = remember { NameField(page.name) }
     val date = remember { DateFieldWrapper(page.date) }
@@ -53,7 +54,7 @@ fun ImagePageContent(
     )
     DefaultAnimatedVisibility(visible = isEditMode) {
         Row(Modifier.padding(insets)) {
-            VectorIconButton(Icons.Default.Close, onClick = { state.editablePage = null })
+            VectorIconButton(Icons.Default.Close, onClick = onClose)
             Spacer(Modifier.weight(1f))
             if (name.isEmpty() && date.isEmpty()) {
                 TextButton(onClick = { onDelete() }) {
@@ -87,7 +88,7 @@ fun ImagePageContent(
                 isNameValid = isNameValid,
                 date = date,
                 isDateValid = isDateValid,
-                autofocus = state.editablePage?.autofocus,
+                autofocus = editablePage?.autofocus,
                 textStyle = textStyle,
             )
         } else {
@@ -98,7 +99,7 @@ fun ImagePageContent(
                     .fillMaxWidth()
                     .clip(MaterialTheme.shapes.small)
                     .combinedClickable(onLongClick = {
-                        state.editablePage = EditablePage(page, Autofocus.NAME)
+                        onEdit(EditablePage(page, Autofocus.NAME))
                         haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                     }) {}
                     .padding(16.dp),
@@ -119,7 +120,7 @@ fun ImagePageContent(
                         .fillMaxWidth()
                         .clip(MaterialTheme.shapes.small)
                         .combinedClickable(onLongClick = {
-                            state.editablePage = EditablePage(page, Autofocus.DATE)
+                            onEdit(EditablePage(page, Autofocus.DATE))
                             haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                         }) {}
                         .padding(16.dp),
