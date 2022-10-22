@@ -54,5 +54,12 @@ fun MainScreen(presenter: MainPresenter) {
             }
         }
     }
-    DraftPage(insets, state, onDone = { presenter.savePage(it) })
+    state.draft?.let { draft ->
+        DraftPage(
+            insets = insets,
+            editablePage = draft,
+            onClose = { state.editablePage = null },
+            onDone = { presenter.savePage(it) },
+        )
+    }
 }
