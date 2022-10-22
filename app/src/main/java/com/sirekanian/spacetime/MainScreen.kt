@@ -7,9 +7,11 @@ import androidx.compose.foundation.layout.systemBars
 import androidx.compose.runtime.Composable
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
-import com.sirekanian.spacetime.model.Draft
+import com.sirekanian.spacetime.model.EditablePage
+import com.sirekanian.spacetime.model.EditablePage.Autofocus
 import com.sirekanian.spacetime.model.GalleryPage
 import com.sirekanian.spacetime.model.ImagePage
+import com.sirekanian.spacetime.model.createImagePage
 import com.sirekanian.spacetime.ui.DraftPage
 import com.sirekanian.spacetime.ui.GalleryPageContent
 import com.sirekanian.spacetime.ui.ImagePageContent
@@ -43,7 +45,10 @@ fun MainScreen(presenter: MainPresenter) {
                 GalleryPageContent(
                     insets,
                     state.thumbnails,
-                    onSelect = { state.draft = Draft(it) },
+                    onSelect = { url ->
+                        val draft = createImagePage("", url, "", 0.5f)
+                        state.editablePage = EditablePage(draft, Autofocus.NAME)
+                    },
                     onEnd = { presenter.loadGallery() }
                 )
             }

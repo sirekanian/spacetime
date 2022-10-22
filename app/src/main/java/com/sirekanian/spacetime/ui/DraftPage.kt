@@ -15,19 +15,18 @@ import androidx.compose.ui.unit.dp
 import com.sirekanian.spacetime.D
 import com.sirekanian.spacetime.MainState
 import com.sirekanian.spacetime.ext.VectorIconButton
-import com.sirekanian.spacetime.model.EditablePage.Autofocus
 import com.sirekanian.spacetime.model.ImagePage
 import com.sirekanian.spacetime.model.createImagePage
 
 @Composable
 fun DraftPage(insets: PaddingValues, state: MainState, onDone: (ImagePage) -> Unit) {
-    val draft = state.draft ?: return
+    val draft = state.draft?.page ?: return
     BackHandler {
-        state.draft = null
+        state.editablePage = null
     }
-    val name = remember { NameField("") }
-    val date = remember { DateFieldWrapper("") }
-    var blur by remember { mutableStateOf(0.5f) }
+    val name = remember { NameField(draft.name) }
+    val date = remember { DateFieldWrapper(draft.date) }
+    var blur by remember { mutableStateOf(draft.blur) }
     var isNameValid by remember(name.field) { mutableStateOf(true) }
     var isDateValid by remember(date.field) { mutableStateOf(true) }
     PageBackground(
@@ -35,7 +34,7 @@ fun DraftPage(insets: PaddingValues, state: MainState, onDone: (ImagePage) -> Un
         blur = blur,
     )
     Row(Modifier.padding(insets)) {
-        VectorIconButton(Icons.Default.Close, onClick = { state.draft = null })
+        VectorIconButton(Icons.Default.Close, onClick = { state.editablePage = null })
         Spacer(Modifier.weight(1f))
         VectorIconButton(Icons.Default.Done, onClick = {
             isNameValid = name.isValid()
@@ -59,7 +58,7 @@ fun DraftPage(insets: PaddingValues, state: MainState, onDone: (ImagePage) -> Un
             isNameValid = isNameValid,
             date = date,
             isDateValid = isDateValid,
-            autofocus = Autofocus.NAME,
+            autofocus = state.draft?.autofocus,
             textStyle = textStyle,
         )
         Box(Modifier.height(48.dp), Alignment.Center) {

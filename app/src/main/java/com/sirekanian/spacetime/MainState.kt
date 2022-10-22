@@ -18,7 +18,7 @@ class MainState {
     val pagerState = PagerState()
     var editablePage by mutableStateOf<EditablePage?>(null)
     var pages by mutableStateOf(listOf<Page>())
-    var draft by mutableStateOf<Draft?>(null)
+    val draft by derivedStateOf { editablePage?.takeIf { it.page.id == 0 } }
     var thumbnails by mutableStateOf(listOf<Thumbnail>())
     val nextDate: LocalDate by derivedStateOf {
         thumbnails.let {
