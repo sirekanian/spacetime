@@ -10,15 +10,23 @@
         <item>2021-01-17</item>
         <item>2015-02-27</item>
     </string-array>
+    <plurals name="duration_years" translatable="false"><!-- TODO: localization -->
+        <item quantity="one">%d year</item>
+        <item quantity="other">%d years</item>
+    </plurals>
+    <plurals name="duration_months" translatable="false"><!-- TODO: localization -->
+        <item quantity="one">%d month</item>
+        <item quantity="other">%d months</item>
+    </plurals>
     <plurals name="duration_days">
-        <item quantity="one">%d day</item>
-        <item quantity="other">%d days</item>
+        <item quantity="one">%d day</item>
+        <item quantity="other">%d days</item>
     </plurals>
     <string name="duration_yesterday">yesterday</string>
     <string name="duration_today">today</string>
     <string name="duration_tomorrow">tomorrow</string>
     <plurals name="duration_in_days">
-        <item quantity="one">in %d day</item>
-        <item quantity="other">in %d days</item>
+        <item quantity="one">in %d day</item>
+        <item quantity="other">in %d days</item>
     </plurals>
 </resources>

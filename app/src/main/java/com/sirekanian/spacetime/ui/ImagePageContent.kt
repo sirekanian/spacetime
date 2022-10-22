@@ -1,6 +1,7 @@
 package com.sirekanian.spacetime.ui
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
@@ -25,9 +26,13 @@ import com.sirekanian.spacetime.D
 import com.sirekanian.spacetime.R
 import com.sirekanian.spacetime.ext.DefaultAnimatedVisibility
 import com.sirekanian.spacetime.ext.VectorIconButton
+import com.sirekanian.spacetime.ext.currentDate
 import com.sirekanian.spacetime.model.EditablePage
 import com.sirekanian.spacetime.model.EditablePage.Autofocus
 import com.sirekanian.spacetime.model.ImagePage
+import kotlinx.datetime.daysUntil
+import kotlinx.datetime.periodUntil
+import kotlin.math.abs
 
 @Composable
 fun ImagePageContent(
@@ -107,22 +112,45 @@ fun ImagePageContent(
                 overflow = TextOverflow.Ellipsis,
                 maxLines = 2,
             )
-            DateField(page.date).getRelativeDays()?.let { days ->
+            var isDefaultDateFormat by remember { mutableStateOf(true) }
+            DateField(page.date).getLocalDate()?.let { date ->
+                val current = remember { currentDate() }
                 Text(
-                    text = @OptIn(ExperimentalComposeUiApi::class) when {
-                        days == 0 -> stringResource(R.string.duration_today)
-                        days == -1 -> stringResource(R.string.duration_tomorrow)
-                        days == 1 -> stringResource(R.string.duration_yesterday)
-                        days < 0 -> pluralStringResource(R.plurals.duration_in_days, -days, -days)
-                        else -> pluralStringResource(R.plurals.duration_days, days, days)
+                    text = @OptIn(ExperimentalComposeUiApi::class) if (isDefaultDateFormat) {
+                        val days = date.daysUntil(current)
+                        when {
+                            days == 0 -> stringResource(R.string.duration_today)
+                            days == -1 -> stringResource(R.string.duration_tomorrow)
+                            days == 1 -> stringResource(R.string.duration_yesterday)
+                            days < 0 -> pluralStringResource(R.plurals.duration_in_days, -days, -days)
+                            else -> pluralStringResource(R.plurals.duration_days, days, days)
+                        }
+                    } else {
+                        val period = date.periodUntil(current)
+                        @Suppress("SimplifiableCallChain")
+                        listOf(
+                            R.plurals.duration_years to period.years,
+                            R.plurals.duration_months to period.months,
+                            R.plurals.duration_days to period.days,
+                        )
+                            .filter { (_, value) -> value != 0 }
+                            .ifEmpty { listOf(R.plurals.duration_days to period.days) }
+                            .map { (id, value) -> pluralStringResource(id, abs(value), abs(value)) }
+                            .joinToString(" ", if (date > current) "in " else "")
                     },
                     modifier = @OptIn(ExperimentalFoundationApi::class) Modifier
                         .fillMaxWidth()
                         .clip(MaterialTheme.shapes.small)
-                        .combinedClickable(onLongClick = {
-                            onEdit(EditablePage(page, Autofocus.DATE))
-                            haptic.performHapticFeedback(HapticFeedbackType.LongPress)
-                        }) {}
+                        .animateContentSize()
+                        .combinedClickable(
+                            onClick = {
+                                isDefaultDateFormat = !isDefaultDateFormat
+                            },
+                            onLongClick = {
+                                onEdit(EditablePage(page, Autofocus.DATE))
+                                haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                            },
+                        )
                         .padding(16.dp),
                     style = textStyle,
                 )
