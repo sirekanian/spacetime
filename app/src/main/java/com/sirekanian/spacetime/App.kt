@@ -2,6 +2,7 @@ package com.sirekanian.spacetime
 
 import android.app.Application
 import androidx.room.Room
+import com.sirekanian.spacetime.data.DebugDataCallback
 import com.sirekanian.spacetime.data.DefaultDataCallback
 import com.sirekanian.spacetime.data.Repository
 import com.sirekanian.spacetime.data.RepositoryImpl
@@ -15,6 +16,7 @@ class App : Application() {
         RepositoryImpl(
             Room.databaseBuilder(this, Database::class.java, "database")
                 .addCallback(DefaultDataCallback(resources))
+                .addCallback(DebugDataCallback())
                 .build().getPageDao()
         )
     }
