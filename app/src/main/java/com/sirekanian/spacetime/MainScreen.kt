@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.systemBars
 import androidx.compose.runtime.Composable
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
+import com.sirekanian.spacetime.ext.ScreenAnimatedVisibility
 import com.sirekanian.spacetime.model.EditablePage
 import com.sirekanian.spacetime.model.EditablePage.Autofocus
 import com.sirekanian.spacetime.model.GalleryPage
@@ -56,12 +57,14 @@ fun MainScreen(presenter: MainPresenter) {
             }
         }
     }
-    state.draft?.let { draft ->
-        DraftPage(
-            insets = insets,
-            editablePage = draft,
-            onClose = { state.editablePage = null },
-            onDone = { presenter.savePage(it) },
-        )
+    ScreenAnimatedVisibility(visible = state.draft != null) {
+        state.draft?.let { draft ->
+            DraftPage(
+                insets = insets,
+                editablePage = draft,
+                onClose = { state.editablePage = null },
+                onDone = { presenter.savePage(it) },
+            )
+        }
     }
 }
