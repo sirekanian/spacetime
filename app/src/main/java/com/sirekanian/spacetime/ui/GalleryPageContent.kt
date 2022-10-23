@@ -1,19 +1,23 @@
 package com.sirekanian.spacetime.ui
 
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.sirekanian.spacetime.ext.DefaultAnimatedVisibility
 import com.sirekanian.spacetime.model.Thumbnail
 
 @Composable
@@ -23,6 +27,7 @@ fun GalleryPageContent(
     onSelect: (String) -> Unit,
     onEnd: () -> Unit,
 ) {
+    var previewImageUrl by remember { mutableStateOf<String?>(null) }
     LazyVerticalGrid(
         columns = GridCells.Adaptive(100.dp),
         modifier = Modifier.fillMaxSize(),
@@ -36,9 +41,16 @@ fun GalleryPageContent(
                     .crossfade(true)
                     .build(),
                 contentDescription = null,
-                modifier = Modifier
+                modifier = @OptIn(ExperimentalFoundationApi::class) Modifier
                     .aspectRatio(1f)
-                    .clickable { onSelect(url) },
+                    .combinedClickable(
+                        onClick = {
+                            onSelect(url)
+                        },
+                        onLongClick = {
+                            previewImageUrl = url
+                        },
+                    ),
                 contentScale = ContentScale.Crop,
             )
         }
@@ -48,4 +60,21 @@ fun GalleryPageContent(
             }
         }
     }
+    DefaultAnimatedVisibility(visible = previewImageUrl != null) {
+        previewImageUrl?.let { url ->
+            ImagePreview(url, onClick = { previewImageUrl = null })
+        }
+    }
+}
+
+@Composable
+private fun ImagePreview(url: String, onClick: () -> Unit) {
+    AsyncImage(
+        model = url,
+        contentDescription = null,
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color(0xCC000000))
+            .clickable(onClick = onClick),
+    )
 }
