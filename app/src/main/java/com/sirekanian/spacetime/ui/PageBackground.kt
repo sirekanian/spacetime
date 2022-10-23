@@ -1,6 +1,7 @@
 package com.sirekanian.spacetime.ui
 
 import android.os.Build
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -33,6 +34,7 @@ fun PageBackground(url: String, blur: Float) {
         contentDescription = null,
         modifier = Modifier
             .fillMaxSize()
+            .clickable(enabled = false, onClick = {})
             .let {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                     it.blur((blur * 22 + 3).dp)
