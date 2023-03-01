@@ -64,12 +64,12 @@ dependencies {
 
     // compose
     implementation "androidx.compose.material:material:$composeLibraryVersion"
-    implementation "androidx.activity:activity-compose:1.6.0"
-    implementation "com.google.accompanist:accompanist-pager:0.25.1"
+    implementation "androidx.activity:activity-compose:1.6.1"
+    implementation "com.google.accompanist:accompanist-pager:0.28.0"
 
     // room
-    implementation "androidx.room:room-ktx:2.4.3"
-    kapt "androidx.room:room-compiler:2.4.3"
+    implementation "androidx.room:room-ktx:2.5.0"
+    kapt "androidx.room:room-compiler:2.5.0"
 
     // coil
     implementation "io.coil-kt:coil-compose:2.2.2"
@@ -78,8 +78,8 @@ dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-datetime:0.4.0'
 
     // ktor
-    implementation 'io.ktor:ktor-client-android:2.1.2'
-    implementation 'io.ktor:ktor-client-content-negotiation:2.1.2'
-    implementation 'io.ktor:ktor-serialization-kotlinx-json:2.1.2'
+    implementation 'io.ktor:ktor-client-android:2.2.4'
+    implementation 'io.ktor:ktor-client-content-negotiation:2.2.4'
+    implementation 'io.ktor:ktor-serialization-kotlinx-json:2.2.4'
 
 }
