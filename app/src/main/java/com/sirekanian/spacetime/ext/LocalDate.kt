@@ -5,6 +5,9 @@ import kotlinx.datetime.*
 fun currentDate(): LocalDate =
     Clock.System.todayIn(TimeZone.currentSystemDefault())
 
+fun LocalDate.minusDays(n: Int): LocalDate =
+    minus(n, DateTimeUnit.DAY)
+
 fun LocalDate.minusMonths(n: Int): LocalDate =
     minus(n, DateTimeUnit.MONTH)
 

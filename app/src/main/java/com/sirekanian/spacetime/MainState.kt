@@ -7,6 +7,7 @@ import androidx.compose.runtime.setValue
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.PagerState
 import com.sirekanian.spacetime.ext.currentDate
+import com.sirekanian.spacetime.ext.minusDays
 import com.sirekanian.spacetime.ext.minusMonths
 import com.sirekanian.spacetime.ext.withDayOfMonth
 import com.sirekanian.spacetime.model.*
@@ -23,7 +24,7 @@ class MainState {
     val nextDate: LocalDate by derivedStateOf {
         thumbnails.let {
             if (it.isEmpty()) {
-                currentDate().withDayOfMonth(1)
+                currentDate().minusDays(2).withDayOfMonth(1)
             } else {
                 it.minOf(Thumbnail::date).withDayOfMonth(1).minusMonths(1)
             }
