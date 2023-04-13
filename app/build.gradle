@@ -67,7 +67,6 @@ dependencies {
     // compose
     implementation "androidx.compose.material:material:$composeLibraryVersion"
     implementation "androidx.activity:activity-compose:1.7.0"
-    implementation "com.google.accompanist:accompanist-pager:0.30.1"
 
     // room
     implementation "androidx.room:room-ktx:2.5.1"

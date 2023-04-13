@@ -1,10 +1,10 @@
 package com.sirekanian.spacetime
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.platform.LocalContext
-import com.google.accompanist.pager.ExperimentalPagerApi
 import com.sirekanian.spacetime.data.Repository
 import com.sirekanian.spacetime.data.api.ThumbnailApi
 import com.sirekanian.spacetime.ext.app
@@ -66,9 +66,9 @@ class MainPresenterImpl(
         }
     }
 
+    @ExperimentalFoundationApi
     override fun openPageByIndex(index: Int) {
         scope.launch {
-            @OptIn(ExperimentalPagerApi::class)
             state.pagerState.animateScrollToPage(index)
         }
     }

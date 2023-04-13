@@ -1,21 +1,23 @@
 package com.sirekanian.spacetime
 
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.pager.PagerState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import com.google.accompanist.pager.ExperimentalPagerApi
-import com.google.accompanist.pager.PagerState
 import com.sirekanian.spacetime.ext.currentDate
 import com.sirekanian.spacetime.ext.minusDays
 import com.sirekanian.spacetime.ext.minusMonths
 import com.sirekanian.spacetime.ext.withDayOfMonth
-import com.sirekanian.spacetime.model.*
+import com.sirekanian.spacetime.model.EditablePage
+import com.sirekanian.spacetime.model.Page
+import com.sirekanian.spacetime.model.Thumbnail
 import kotlinx.datetime.LocalDate
 
 class MainState {
 
-    @OptIn(ExperimentalPagerApi::class)
+    @ExperimentalFoundationApi
     val pagerState = PagerState()
     var editablePage by mutableStateOf<EditablePage?>(null)
     var pages by mutableStateOf(listOf<Page>())

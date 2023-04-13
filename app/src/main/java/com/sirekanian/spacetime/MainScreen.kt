@@ -1,12 +1,12 @@
 package com.sirekanian.spacetime
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.systemBars
+import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.runtime.Composable
-import com.google.accompanist.pager.ExperimentalPagerApi
-import com.google.accompanist.pager.HorizontalPager
 import com.sirekanian.spacetime.ext.ScreenAnimatedVisibility
 import com.sirekanian.spacetime.model.EditablePage
 import com.sirekanian.spacetime.model.EditablePage.Autofocus
@@ -18,7 +18,7 @@ import com.sirekanian.spacetime.ui.GalleryPageContent
 import com.sirekanian.spacetime.ui.ImagePageContent
 
 @Composable
-@ExperimentalPagerApi
+@ExperimentalFoundationApi
 fun MainScreen(presenter: MainPresenter) {
     val state = presenter.state
     BackHandler(state.pagerState.currentPage > 0) {
@@ -28,7 +28,7 @@ fun MainScreen(presenter: MainPresenter) {
     val insets = WindowInsets.systemBars.asPaddingValues()
     HorizontalPager(
         state = state.pagerState,
-        count = pages.size,
+        pageCount = pages.size,
         key = { pages[it].id },
         userScrollEnabled = state.editablePage == null,
     ) { index ->
