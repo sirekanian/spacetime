@@ -58,7 +58,11 @@ fun ImagePageContent(
         blur = blur,
     )
     DefaultAnimatedVisibility(visible = isEditMode) {
-        Row(Modifier.padding(insets)) {
+        Row(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(insets),
+        ) {
             VectorIconButton(Icons.Default.Close, onClick = onClose)
             Spacer(Modifier.weight(1f))
             if (name.isEmpty() && date.isEmpty()) {
