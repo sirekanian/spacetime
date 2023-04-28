@@ -67,7 +67,7 @@ dependencies {
 
     // compose
     implementation "androidx.compose.material:material:$composeLibraryVersion"
-    implementation "androidx.activity:activity-compose:1.7.0"
+    implementation "androidx.activity:activity-compose:1.7.1"
 
     // room
     implementation "androidx.room:room-ktx:2.5.1"
@@ -80,8 +80,8 @@ dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-datetime:0.4.0'
 
     // ktor
-    implementation 'io.ktor:ktor-client-android:2.2.4'
-    implementation 'io.ktor:ktor-client-content-negotiation:2.2.4'
-    implementation 'io.ktor:ktor-serialization-kotlinx-json:2.2.4'
+    implementation 'io.ktor:ktor-client-android:2.3.0'
+    implementation 'io.ktor:ktor-client-content-negotiation:2.3.0'
+    implementation 'io.ktor:ktor-serialization-kotlinx-json:2.3.0'
 
 }

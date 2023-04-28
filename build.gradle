@@ -1,9 +1,9 @@
 buildscript {
     ext {
         androidPluginVersion = '8.0.0'
-        kotlinLanguageVersion = '1.8.10'
-        composeCompilerVersion = '1.4.3'
-        composeLibraryVersion = '1.4.1'
+        kotlinLanguageVersion = '1.8.20'
+        composeCompilerVersion = '1.4.6'
+        composeLibraryVersion = '1.4.2'
     }
 }
 
@@ -11,7 +11,7 @@ plugins {
     id 'com.android.application' version "$androidPluginVersion" apply false
     id 'org.jetbrains.kotlin.android' version "$kotlinLanguageVersion" apply false
     id 'org.jetbrains.kotlin.plugin.serialization' version "$kotlinLanguageVersion" apply false
-    id 'org.sirekanyan.version-checker' version "1.0.2" apply false
+    id 'org.sirekanyan.version-checker' version "1.0.3" apply false
 }
 
 task clean(type: Delete) {
