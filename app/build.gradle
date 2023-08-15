@@ -1,28 +1,23 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
-    id 'org.jetbrains.kotlin.kapt'
     id 'org.jetbrains.kotlin.plugin.serialization'
+    id 'com.google.devtools.ksp'
     id 'org.sirekanyan.version-checker'
 }
 
 android {
     namespace "com.sirekanian.spacetime"
-    compileSdk 33
+    compileSdk 34
     defaultConfig {
         applicationId "com.sirekanian.spacetime"
         minSdk 21
-        targetSdk 33
+        targetSdk 34
         versionCode appVersionCode as int
         versionName appVersionName
         archivesBaseName = "$applicationId-$versionName-$versionCode"
         vectorDrawables {
             useSupportLibrary true
-        }
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments += ["room.schemaLocation": "$projectDir/schemas".toString()]
-            }
         }
     }
     buildTypes {
@@ -63,25 +58,35 @@ android {
     }
 }
 
+ksp {
+    arg('room.schemaLocation', "$projectDir/schemas")
+}
+
 dependencies {
 
     // compose
+    // noinspection GradleDependency https://issuetracker.google.com/issues/294562502
     implementation "androidx.compose.material:material:$composeLibraryVersion"
-    implementation "androidx.activity:activity-compose:1.7.1"
+    implementation "androidx.activity:activity-compose:1.7.2"
 
     // room
-    implementation "androidx.room:room-ktx:2.5.1"
-    kapt "androidx.room:room-compiler:2.5.1"
+    implementation "androidx.room:room-ktx:2.5.2"
+    ksp "androidx.room:room-compiler:2.5.2"
 
     // coil
-    implementation "io.coil-kt:coil-compose:2.3.0"
+    implementation "io.coil-kt:coil-compose:2.4.0"
 
     // datetime
     implementation 'org.jetbrains.kotlinx:kotlinx-datetime:0.4.0'
 
     // ktor
-    implementation 'io.ktor:ktor-client-android:2.3.0'
-    implementation 'io.ktor:ktor-client-content-negotiation:2.3.0'
-    implementation 'io.ktor:ktor-serialization-kotlinx-json:2.3.0'
+    implementation 'io.ktor:ktor-client-android:2.3.3'
+    implementation 'io.ktor:ktor-client-content-negotiation:2.3.3'
+    implementation 'io.ktor:ktor-serialization-kotlinx-json:2.3.3'
 
+}
+
+versionCheckerOptions {
+    // https://issuetracker.google.com/issues/294562502
+    lessThan("androidx.compose.material:material", "1.5.0")
 }
