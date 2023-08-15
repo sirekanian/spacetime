@@ -14,6 +14,7 @@ import com.sirekanian.spacetime.model.GalleryPage
 import com.sirekanian.spacetime.model.ImagePage
 import com.sirekanian.spacetime.model.createImagePage
 import com.sirekanian.spacetime.ui.DraftPage
+import com.sirekanian.spacetime.ui.GalleryErrorContent
 import com.sirekanian.spacetime.ui.GalleryPageContent
 import com.sirekanian.spacetime.ui.ImagePageContent
 
@@ -45,15 +46,19 @@ fun MainScreen(presenter: MainPresenter) {
                 )
             }
             GalleryPage -> {
-                GalleryPageContent(
-                    insets,
-                    state.thumbnails,
-                    onSelect = { url ->
-                        val draft = createImagePage("", url, "", 0.5f)
-                        state.editablePage = EditablePage(draft, Autofocus.NAME)
-                    },
-                    onEnd = { presenter.loadGallery() }
-                )
+                state.thumbnails?.let { thumbnails ->
+                    GalleryPageContent(
+                        insets = insets,
+                        thumbnails = thumbnails,
+                        onSelect = { url ->
+                            val draft = createImagePage("", url, "", 0.5f)
+                            state.editablePage = EditablePage(draft, Autofocus.NAME)
+                        },
+                        onEnd = { presenter.loadGallery() },
+                    )
+                } ?: run {
+                    GalleryErrorContent(onRetry = presenter::loadGallery)
+                }
             }
         }
     }

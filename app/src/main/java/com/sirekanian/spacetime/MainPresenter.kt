@@ -1,5 +1,6 @@
 package com.sirekanian.spacetime
 
+import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -62,7 +63,16 @@ class MainPresenterImpl(
 
     override fun loadGallery() {
         scope.launch {
-            state.thumbnails = state.thumbnails + api.getThumbnails(state.nextDate)
+            try {
+                state.thumbnails = state.thumbnails.orEmpty() + api.getThumbnails(state.nextDate)
+            } catch (exception: Exception) {
+                Log.d("Spacetime", "Cannot load thumbnails", exception)
+                state.thumbnails?.let { thumbnails ->
+                    if (thumbnails.isEmpty()) {
+                        state.thumbnails = null
+                    }
+                }
+            }
         }
     }
 

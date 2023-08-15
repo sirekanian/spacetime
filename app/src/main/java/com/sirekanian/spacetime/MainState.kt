@@ -22,10 +22,10 @@ class MainState {
     var editablePage by mutableStateOf<EditablePage?>(null)
     var pages by mutableStateOf(listOf<Page>())
     val draft by derivedStateOf { editablePage?.takeIf { it.page.id == 0 } }
-    var thumbnails by mutableStateOf(listOf<Thumbnail>())
+    var thumbnails by mutableStateOf<List<Thumbnail>?>(listOf())
     val nextDate: LocalDate by derivedStateOf {
         thumbnails.let {
-            if (it.isEmpty()) {
+            if (it.isNullOrEmpty()) {
                 currentDate().minusDays(2).withDayOfMonth(1)
             } else {
                 it.minOf(Thumbnail::date).withDayOfMonth(1).minusMonths(1)
