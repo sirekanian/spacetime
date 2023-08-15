@@ -11,13 +11,23 @@ import com.sirekanian.spacetime.data.api.ThumbnailApi
 import com.sirekanian.spacetime.ext.app
 import com.sirekanian.spacetime.model.GalleryPage
 import com.sirekanian.spacetime.model.ImagePage
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import java.net.UnknownHostException
 
 @Composable
 fun rememberMainPresenter(): MainPresenter {
     val app = LocalContext.current.app()
-    val scope = rememberCoroutineScope()
+    val scope = rememberCoroutineScope {
+        CoroutineExceptionHandler { _, throwable ->
+            if (throwable is UnknownHostException) {
+                Log.e("SPACETIME", "Uncaught exception: ${throwable.message}")
+            } else {
+                Log.e("SPACETIME", "Uncaught exception", throwable)
+            }
+        }
+    }
     return remember { MainPresenterImpl(app.api, app.repository, scope) }
 }
 
