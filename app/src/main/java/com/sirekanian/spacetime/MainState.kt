@@ -1,6 +1,5 @@
 package com.sirekanian.spacetime
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -17,8 +16,7 @@ import kotlinx.datetime.LocalDate
 
 class MainState {
 
-    @ExperimentalFoundationApi
-    val pagerState = PagerState()
+    val pagerState = PagerState { pages.size }
     var editablePage by mutableStateOf<EditablePage?>(null)
     var pages by mutableStateOf(listOf<Page>())
     val draft by derivedStateOf { editablePage?.takeIf { it.page.id == 0 } }

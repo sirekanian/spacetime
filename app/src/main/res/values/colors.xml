@@ -1,7 +1,3 @@
 <resources>
     <color name="appWindowBackground">#201a19</color>
-    <color name="appStatusBarColor">#66000000</color>
-    <color name="appNavigationBarColor">#66000000</color>
-    <bool name="appWindowLightStatusBar">false</bool>
-    <bool name="appWindowLightNavigationBar">false</bool>
 </resources>

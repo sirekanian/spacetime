@@ -2,21 +2,24 @@ package com.sirekanian.spacetime
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
-import androidx.core.view.WindowCompat
+import androidx.compose.ui.graphics.toArgb
 import com.sirekanian.spacetime.ui.theme.SpacetimeTheme
+import com.sirekanian.spacetime.ui.theme.SystemBarColor
+
+private val DarkSystemBarStyle = SystemBarStyle.dark(SystemBarColor.toArgb())
 
 class MainActivity : ComponentActivity() {
 
-    @ExperimentalFoundationApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        WindowCompat.setDecorFitsSystemWindows(window, false)
+        enableEdgeToEdge(DarkSystemBarStyle, DarkSystemBarStyle)
         setContent {
             val presenter = rememberMainPresenter()
             SpacetimeTheme {
@@ -29,5 +32,4 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-
 }

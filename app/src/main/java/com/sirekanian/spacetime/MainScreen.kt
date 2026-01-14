@@ -1,17 +1,19 @@
 package com.sirekanian.spacetime
 
 import androidx.activity.compose.BackHandler
-import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.PagerScope
 import androidx.compose.runtime.Composable
 import com.sirekanian.spacetime.ext.ScreenAnimatedVisibility
 import com.sirekanian.spacetime.model.EditablePage
 import com.sirekanian.spacetime.model.EditablePage.Autofocus
 import com.sirekanian.spacetime.model.GalleryPage
 import com.sirekanian.spacetime.model.ImagePage
+import com.sirekanian.spacetime.model.Page
 import com.sirekanian.spacetime.model.createImagePage
 import com.sirekanian.spacetime.ui.DraftPage
 import com.sirekanian.spacetime.ui.GalleryErrorContent
@@ -19,21 +21,14 @@ import com.sirekanian.spacetime.ui.GalleryPageContent
 import com.sirekanian.spacetime.ui.ImagePageContent
 
 @Composable
-@ExperimentalFoundationApi
 fun MainScreen(presenter: MainPresenter) {
     val state = presenter.state
     BackHandler(state.pagerState.currentPage > 0) {
         presenter.openPageByIndex(0)
     }
-    val pages = state.pages
     val insets = WindowInsets.systemBars.asPaddingValues()
-    HorizontalPager(
-        state = state.pagerState,
-        pageCount = pages.size,
-        key = { pages[it].id },
-        userScrollEnabled = state.editablePage == null,
-    ) { index ->
-        when (val page = pages[index]) {
+    MainHorizontalPager(state) { page ->
+        when (page) {
             is ImagePage -> {
                 ImagePageContent(
                     insets,
@@ -72,4 +67,17 @@ fun MainScreen(presenter: MainPresenter) {
             )
         }
     }
+}
+
+@Composable
+private fun MainHorizontalPager(
+    state: MainState,
+    pageContent: @Composable PagerScope.(page: Page) -> Unit,
+) {
+    HorizontalPager(
+        state = state.pagerState,
+        key = { state.pages[it].id },
+        userScrollEnabled = state.editablePage == null,
+        pageContent = { Box { pageContent(state.pages[it]) } },
+    )
 }

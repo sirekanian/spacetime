@@ -26,7 +26,7 @@ class DebugDataCallback : RoomDatabase.Callback() {
             current.plus(+1, DateTimeUnit.MONTH) to "in 1 month",
         ).forEach { (date, name) ->
             val page = createImagePage(name, "", date.toString(), 0f)
-            val args = arrayOf(page.name, page.url, page.date, page.blur)
+            val args = arrayOf<Any>(page.name, page.url, page.date, page.blur)
             db.execSQL("INSERT INTO PageEntity (name, url, date, blur) VALUES (?, ?, ?, ?)", args)
         }
     }

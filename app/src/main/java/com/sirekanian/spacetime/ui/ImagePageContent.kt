@@ -3,7 +3,6 @@ package com.sirekanian.spacetime.ui
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -12,7 +11,6 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
@@ -97,14 +95,14 @@ fun ImagePageContent(
                 isNameValid = isNameValid,
                 date = date,
                 isDateValid = isDateValid,
-                autofocus = editablePage?.autofocus,
+                autofocus = editablePage.autofocus,
                 textStyle = textStyle,
             )
         } else {
             val haptic = LocalHapticFeedback.current
             Text(
                 text = page.name,
-                modifier = @OptIn(ExperimentalFoundationApi::class) Modifier
+                modifier = Modifier
                     .fillMaxWidth()
                     .clip(MaterialTheme.shapes.small)
                     .combinedClickable(onLongClick = {
@@ -120,7 +118,7 @@ fun ImagePageContent(
             DateField(page.date).getLocalDate()?.let { date ->
                 val current = remember { currentDate() }
                 Text(
-                    text = @OptIn(ExperimentalComposeUiApi::class) if (isDefaultDateFormat) {
+                    text = if (isDefaultDateFormat) {
                         val days = date.daysUntil(current)
                         when {
                             days == 0 -> stringResource(R.string.duration_today)
@@ -142,7 +140,7 @@ fun ImagePageContent(
                             .map { (id, value) -> pluralStringResource(id, abs(value), abs(value)) }
                             .joinToString(" ", if (date > current) "in " else "")
                     },
-                    modifier = @OptIn(ExperimentalFoundationApi::class) Modifier
+                    modifier = Modifier
                         .fillMaxWidth()
                         .clip(MaterialTheme.shapes.small)
                         .animateContentSize()

@@ -1,7 +1,6 @@
 package com.sirekanian.spacetime
 
 import android.util.Log
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -86,7 +85,6 @@ class MainPresenterImpl(
         }
     }
 
-    @ExperimentalFoundationApi
     override fun openPageByIndex(index: Int) {
         scope.launch {
             state.pagerState.animateScrollToPage(index)

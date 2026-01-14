@@ -1,6 +1,5 @@
 package com.sirekanian.spacetime.ui
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
@@ -42,7 +41,7 @@ fun GalleryPageContent(
                     .crossfade(true)
                     .build(),
                 contentDescription = null,
-                modifier = @OptIn(ExperimentalFoundationApi::class) Modifier
+                modifier = Modifier
                     .aspectRatio(1f)
                     .combinedClickable(
                         onClick = {

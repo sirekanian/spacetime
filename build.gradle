@@ -1,20 +1,15 @@
 buildscript {
     ext {
-        androidPluginVersion = '8.1.0'
-        kotlinLanguageVersion = '1.9.0'
-        composeCompilerVersion = '1.5.1'
-        composeLibraryVersion = '1.4.3'
+        androidPluginVersion = '8.13.2'
+        kotlinLanguageVersion = '2.3.0'
     }
 }
 
 plugins {
     id 'com.android.application' version "$androidPluginVersion" apply false
     id 'org.jetbrains.kotlin.android' version "$kotlinLanguageVersion" apply false
+    id 'org.jetbrains.kotlin.plugin.compose' version "$kotlinLanguageVersion" apply false
     id 'org.jetbrains.kotlin.plugin.serialization' version "$kotlinLanguageVersion" apply false
-    id 'com.google.devtools.ksp' version "$kotlinLanguageVersion-1.0.13" apply false
-    id 'org.sirekanyan.version-checker' version "1.0.7" apply false
-}
-
-task clean(type: Delete) {
-    delete rootProject.buildDir
+    id 'com.google.devtools.ksp' version "2.3.4" apply false
+    id 'org.sirekanyan.version-checker' version "1.0.14" apply false
 }
