@@ -2,10 +2,10 @@ package com.sirekanian.spacetime.ui
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.LocalContentColor
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.material.TextFieldDefaults
-import androidx.compose.material.ripple.LocalRippleTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
@@ -26,9 +26,7 @@ fun EditForm(
     autofocus: Autofocus?,
     textStyle: TextStyle,
 ) {
-    val ripple = LocalRippleTheme.current
-    val rippleAlpha = ripple.rippleAlpha().pressedAlpha
-    val rippleColor = ripple.defaultColor().copy(alpha = rippleAlpha)
+    val backgroundColor = LocalContentColor.current.copy(alpha = 0.1f)
     val nameFocusRequester = remember { FocusRequester() }
     val dateFocusRequester = remember { FocusRequester() }
     OutlinedTextField(
@@ -42,7 +40,7 @@ fun EditForm(
         isError = !isNameValid,
         keyboardOptions = KeyboardOptions(KeyboardCapitalization.Sentences),
         maxLines = 2,
-        colors = TextFieldDefaults.outlinedTextFieldColors(backgroundColor = rippleColor),
+        colors = TextFieldDefaults.outlinedTextFieldColors(backgroundColor = backgroundColor),
     )
     OutlinedTextField(
         value = date.field,
@@ -56,7 +54,7 @@ fun EditForm(
         visualTransformation = { DateField(it.text).getVisualTransformation() },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         singleLine = true,
-        colors = TextFieldDefaults.outlinedTextFieldColors(backgroundColor = rippleColor),
+        colors = TextFieldDefaults.outlinedTextFieldColors(backgroundColor = backgroundColor),
     )
     LaunchedEffect(Unit) {
         when (autofocus) {
