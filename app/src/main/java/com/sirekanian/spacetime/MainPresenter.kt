@@ -73,7 +73,11 @@ class MainPresenterImpl(
     override fun loadGallery() {
         scope.launch {
             try {
-                state.thumbnails = state.thumbnails.orEmpty() + api.getThumbnails(state.nextDate)
+                state.thumbnails = join(
+                    list = state.thumbnails,
+                    newList = api.getThumbnails(state.nextDate),
+                    selector = { it.url },
+                )
             } catch (exception: Exception) {
                 Log.d("Spacetime", "Cannot load thumbnails", exception)
                 state.thumbnails?.let { thumbnails ->
@@ -83,6 +87,20 @@ class MainPresenterImpl(
                 }
             }
         }
+    }
+
+    /**
+     * This method joins lists, avoiding duplication of edge elements.
+     */
+    private fun <T, U : Comparable<U>> join(
+        list: List<T>?,
+        newList: List<T>,
+        selector: (T) -> U,
+    ): List<T> {
+        val lastElement = list?.lastOrNull() ?: return newList
+        val newFirstElement = newList.firstOrNull() ?: return list
+        val dropCount = if (selector(lastElement) == selector(newFirstElement)) 1 else 0
+        return list.dropLast(dropCount).plus(newList)
     }
 
     override fun openPageByIndex(index: Int) {
